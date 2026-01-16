@@ -5,7 +5,7 @@ const regUser = async (data) => {
   const response = await axios.post(`${uri}/api/user`, data);
 
   if (response.data) {
-    localStorage.setItem("shopifyeco-user", JSON.stringify(response.data));
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
   }
 
   return response.data;
@@ -15,14 +15,14 @@ const loginUser = async (data) => {
   const response = await axios.post(`${uri}/api/user/login`, data);
 
   if (response.data) {
-    localStorage.setItem("shopifyeco-user", JSON.stringify(response.data));
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
   }
 
   return response.data;
 };
 
 const logout = () => {
-  localStorage.removeItem("shopifyeco-user");
+  localStorage.removeItem("public-dripper-user");
 };
 
 const updateProfile = async (email, profileData) => {
@@ -32,7 +32,7 @@ const updateProfile = async (email, profileData) => {
   });
 
   if (response.data) {
-    localStorage.setItem("shopifyeco-user", JSON.stringify(response.data));
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
   }
 
   return response.data;
@@ -45,7 +45,7 @@ const addAddress = async (email, address) => {
   });
 
   if (response.data) {
-    localStorage.setItem("shopifyeco-user", JSON.stringify(response.data));
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
   }
   return response.data;
 };
@@ -56,7 +56,7 @@ const removeAddress = async (email, id) => {
   });
 
   if (response.data) {
-    localStorage.setItem("shopifyeco-user", JSON.stringify(response.data));
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
   }
   return response.data;
 };
@@ -68,7 +68,7 @@ const addCard = async (email, card) => {
   });
 
   if (response.data) {
-    localStorage.setItem("shopifyeco-user", JSON.stringify(response.data));
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
   }
   return response.data;
 };
@@ -79,7 +79,7 @@ const removeCard = async (email, id) => {
   });
 
   if (response.data) {
-    localStorage.setItem("shopifyeco-user", JSON.stringify(response.data));
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
   }
   return response.data;
 };
