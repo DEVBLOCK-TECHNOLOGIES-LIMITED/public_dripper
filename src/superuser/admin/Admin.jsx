@@ -1,0 +1,144 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import uri from "../../features/config";
+import AdminLayout from "../AdminLayout";
+import {
+  HiOutlineUserGroup,
+  HiOutlineCube,
+  HiOutlineCurrencyDollar,
+  HiOutlineTrendingUp,
+} from "react-icons/hi";
+
+const Dashboard = () => {
+  const { user } = useSelector((state) => state.auth);
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get(`${uri}/api/admin/stats`, {
+          headers: { "x-user-email": user?.data?.email },
+        });
+        setStats(response.data.data);
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user?.data?.email) fetchStats();
+  }, [user]);
+
+  const statCards = [
+    {
+      title: "Total Users",
+      value: stats?.totalUsers || 0,
+      icon: <HiOutlineUserGroup size={24} />,
+      color: "bg-blue-500",
+    },
+    {
+      title: "Active Orders",
+      value: stats?.totalOrders || 0,
+      icon: <HiOutlineCube size={24} />,
+      color: "bg-green-500",
+    },
+    {
+      title: "Total Revenue",
+      value: `$${stats?.totalRevenue?.toLocaleString() || 0}`,
+      icon: <HiOutlineCurrencyDollar size={24} />,
+      color: "bg-purple-500",
+    },
+    {
+      title: "Credits in Circulation",
+      value: stats?.totalCredits?.toLocaleString() || 0,
+      icon: <HiOutlineTrendingUp size={24} />,
+      color: "bg-amber-500",
+    },
+  ];
+
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-full text-blue-600 font-bold animate-pulse">
+        Loading Metrics...
+      </div>
+    );
+
+  return (
+    <AdminLayout>
+      <div className="space-y-8">
+        <header>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+            System Overview
+          </h1>
+          <p className="mt-1 text-gray-500 font-medium">
+            Platform performance and aggregate metrics.
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {statCards.map((card, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            >
+              <div className="flex items-center justify-between">
+                <div
+                  className={`${card.color} p-4 rounded-2xl text-white shadow-lg`}
+                >
+                  {card.icon}
+                </div>
+              </div>
+              <div className="mt-6">
+                <p className="text-sm font-bold text-gray-400 tracking-wider mb-1 uppercase">
+                  {card.title}
+                </p>
+                <h3 className="text-3xl font-black text-gray-900">
+                  {card.value}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Recent Activity Mockup */}
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-800 tracking-tight">
+              Recent System Pulse
+            </h2>
+          </div>
+          <div className="p-6">
+            <div className="space-y-6">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-2xl transition-colors group cursor-pointer"
+                >
+                  <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold">
+                    {i}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-gray-800">
+                      System event logged
+                    </p>
+                    <p className="text-xs text-gray-400 font-medium">
+                      Automatic performance check completed successfully.
+                    </p>
+                  </div>
+                  <span className="text-xs font-bold text-gray-400 uppercase">
+                    2m ago
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </AdminLayout>
+  );
+};
+
+export default Dashboard;
