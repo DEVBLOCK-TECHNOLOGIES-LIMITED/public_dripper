@@ -10,21 +10,27 @@ import Admin from "./superuser/admin/Admin";
 
 import ScrollToTop from "./components/ScrollToTop";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 const container = document.getElementById("root");
 const root = createRoot(container);
+
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <ScrollToTop />
-        <Routes>
-          <Route path="*" element={<App />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
-      </Router>
+      <GoogleOAuthProvider clientId={clientId}>
+        <Router>
+          <ScrollToTop />
+          <Routes>
+            <Route path="*" element={<App />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </Router>
+      </GoogleOAuthProvider>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

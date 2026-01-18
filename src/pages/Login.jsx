@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../features/auth/authSlice";
+import {
+  login,
+  reset,
+  loginWithGoogle,
+  loginWithApple,
+} from "../features/auth/authSlice";
+import { GoogleLogin } from "@react-oauth/google";
+import AppleLogin from "react-apple-signin-auth";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -115,6 +122,51 @@ function Login() {
         >
           {isLoading ? <Loader /> : "Sign In"}
         </button>
+
+        <div className="flex flex-col gap-4 mt-2">
+          <div className="flex items-center gap-4">
+            <div className="h-px bg-gold-500/20 flex-1" />
+            <span className="text-champagne-500 text-sm">OR</span>
+            <div className="h-px bg-gold-500/20 flex-1" />
+          </div>
+
+          <div className="flex justify-center flex-col gap-3 items-center w-full">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                dispatch(loginWithGoogle(credentialResponse.credential));
+              }}
+              onError={() => {
+                toast.error("Google Login Failed");
+              }}
+              theme="filled_black"
+              shape="pill"
+            />
+
+            <AppleLogin
+              clientId={process.env.REACT_APP_APPLE_CLIENT_ID}
+              redirectURI={process.env.REACT_APP_APPLE_REDIRECT_URI}
+              usePopup={true}
+              callback={(response) => {
+                if (!response.error) {
+                  dispatch(loginWithApple(response));
+                } else {
+                  toast.error("Apple Sign In Failed");
+                }
+              }}
+              scope="email name"
+              responseMode="query"
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  className="px-6 py-2.5 bg-black text-white rounded-full flex items-center gap-3 hover:bg-gray-900 transition-colors w-full sm:w-auto min-w-[200px] justify-center"
+                >
+                  <i className="fa fa-apple text-xl"></i>
+                  <span className="font-medium">Sign in with Apple</span>
+                </button>
+              )}
+            />
+          </div>
+        </div>
 
         <div className="mt-4 flex flex-col items-center gap-4 text-sm text-champagne-400">
           <div className="flex items-center gap-2">

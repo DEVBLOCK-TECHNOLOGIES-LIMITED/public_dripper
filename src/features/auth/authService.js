@@ -84,6 +84,26 @@ const removeCard = async (email, id) => {
   return response.data;
 };
 
+const googleLogin = async (token) => {
+  const response = await axios.post(`${uri}/api/user/google`, { token });
+
+  if (response.data) {
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
+  }
+
+  return response.data;
+};
+
+const appleLogin = async (data) => {
+  const response = await axios.post(`${uri}/api/user/apple`, data);
+
+  if (response.data) {
+    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
+  }
+
+  return response.data;
+};
+
 const authService = {
   regUser,
   loginUser,
@@ -93,6 +113,8 @@ const authService = {
   removeAddress,
   addCard,
   removeCard,
+  googleLogin,
+  appleLogin,
 };
 
 export default authService;
