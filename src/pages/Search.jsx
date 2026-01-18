@@ -23,27 +23,32 @@ function Search() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-noir-900 py-12 px-4">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">
-          Search Our Shop
+        <h1 className="font-display text-4xl font-bold text-champagne-100 mb-8">
+          Search the Collection
         </h1>
 
         <div className="w-full max-w-2xl relative mb-12">
           <input
-            className="w-full p-4 pl-6 pr-14 text-lg border-2 border-transparent rounded-2xl bg-white shadow-xl focus:outline-none focus:border-purple-500 transition-all duration-300"
+            className="w-full p-6 pl-8 pr-16 text-lg rounded-2xl input-luxury shadow-xl focus:ring-1 focus:ring-gold-500/50"
             type="text"
             value={search}
             onChange={onChange}
-            placeholder="Search by name or product code (e.g. 'Iphone')"
+            placeholder="Search by name or style code..."
           />
-          <FaSearch className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
+          <FaSearch className="absolute right-8 top-1/2 -translate-y-1/2 text-gold-500 text-xl" />
         </div>
 
         {search.trim() && (
           <div className="w-full">
-            <p className="text-gray-500 mb-8 text-center">
-              Found {filteredProducts.length} results for "{search}"
+            <p className="text-champagne-400 mb-8 text-center text-lg">
+              Found{" "}
+              <span className="text-gold-500 font-bold">
+                {filteredProducts.length}
+              </span>{" "}
+              results for "
+              <span className="italic text-champagne-200">{search}</span>"
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -53,8 +58,8 @@ function Search() {
             </div>
 
             {filteredProducts.length === 0 && (
-              <div className="text-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
-                <p className="text-xl text-gray-400 font-medium">
+              <div className="text-center py-20 luxury-card rounded-3xl">
+                <p className="text-xl text-champagne-400 font-medium">
                   No matches found. Try a different term.
                 </p>
               </div>
@@ -63,10 +68,10 @@ function Search() {
         )}
 
         {!search.trim() && (
-          <div className="text-center py-32 opacity-50 grayscale">
-            <FaSearch className="text-9xl mx-auto mb-6 text-gray-200" />
-            <p className="text-xl text-gray-400 font-medium italic">
-              What are you looking for today?
+          <div className="text-center py-32 opacity-70">
+            <FaSearch className="text-8xl mx-auto mb-6 text-gold-500/20" />
+            <p className="text-2xl text-champagne-500 font-display italic">
+              What masterpiece are you looking for today?
             </p>
           </div>
         )}

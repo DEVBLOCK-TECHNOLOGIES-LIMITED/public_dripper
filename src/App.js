@@ -11,20 +11,19 @@ import Catalog from "./pages/Catalog";
 import { useEffect } from "react";
 import { getProducts } from "./features/products/productSlice";
 import { getCart } from "./features/cart/cartSlice";
-import { getCredits } from "./features/credits/creditsSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import CartMock from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import MyOrders from "./pages/MyOrders";
-import CreditStore from "./pages/CreditStore";
+
 import AdminRoute from "./superuser/AdminRoute";
 import DashboardAdmin from "./superuser/admin/Admin";
 import ProductManagement from "./superuser/admin/ProductManagement";
 import OrderManagement from "./superuser/admin/OrderManagement";
 import UserManagement from "./superuser/admin/UserManagement";
-import CreditManagement from "./superuser/admin/CreditManagement";
 
 function App() {
   const email = useSelector((state) => state.auth.user?.data?.email);
@@ -34,7 +33,6 @@ function App() {
   useEffect(() => {
     if (email) {
       dispatch(getCart({ email }));
-      dispatch(getCredits(email));
     }
   }, [email, dispatch]);
 
@@ -55,7 +53,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/my-orders" element={<MyOrders />} />
-        <Route path="/credits" element={<CreditStore />} />
+
         <Route path="/cart" element={<CartMock />} />
 
         {/* Admin Routes */}
@@ -64,7 +62,6 @@ function App() {
           <Route path="products" element={<ProductManagement />} />
           <Route path="orders" element={<OrderManagement />} />
           <Route path="users" element={<UserManagement />} />
-          <Route path="credits" element={<CreditManagement />} />
         </Route>
       </Routes>
       <Footer />

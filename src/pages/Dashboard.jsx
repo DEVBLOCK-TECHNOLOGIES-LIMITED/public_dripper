@@ -163,7 +163,7 @@ function Dashboard() {
         </div>
       </section>
 
-      {/* Credits Promo Banner */}
+      {/* Exclusive Product Offer Banner */}
       <section className="py-16 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NCAwLTE4IDguMDYtMTggMThzOC4wNiAxOCAxOCAxOCAxOC04LjA2IDE4LTE4LTguMDYtMTgtMTgtMTh6bTAgMzJjLTcuNzMyIDAtMTQtNi4yNjgtMTQtMTRzNi4yNjgtMTQgMTQtMTQgMTQgNi4yNjggMTQgMTQtNi4yNjggMTQtMTQgMTR6IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9Ii4wNSIvPjwvZz48L3N2Zz4=')] opacity-30"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -174,23 +174,23 @@ function Dashboard() {
                 Exclusive Offer
               </div>
               <h2 className="font-display text-3xl lg:text-4xl font-bold text-noir-900 mb-3">
-                Get Up To{" "}
+                Experience True{" "}
                 <span className="underline decoration-wavy decoration-noir-900/50">
-                  30% Bonus
+                  Luxury
                 </span>{" "}
-                Credits!
+                Today!
               </h2>
               <p className="text-noir-900/80 text-lg max-w-xl font-medium">
-                Purchase store credits and save on your next luxury acquisition.
-                More credits, more savings.
+                Shop our curated collection of rare and authenticated pieces.
+                Elevate your style with timeless elegance.
               </p>
             </div>
             <Link
-              to="/credits"
+              to="/catalog"
               className="flex items-center gap-3 bg-noir-900 text-gold-500 px-8 py-4 rounded-2xl font-black text-lg hover:bg-noir-800 transition-all shadow-2xl shadow-noir-900/30 hover:-translate-y-1"
             >
-              <FaCoins className="text-2xl" />
-              Get Credits
+              <FaGem className="text-2xl" />
+              Shop Now
               <HiOutlineArrowRight className="text-xl" />
             </Link>
           </div>

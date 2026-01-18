@@ -7,7 +7,7 @@ function ProductSkeleton() {
         <div className="h-4 w-24 bg-gray-200 rounded"></div>
         <div className="h-4 w-8 bg-gray-200 rounded"></div>
       </div>
-      <div className="w-full h-[220px] sm:h-[250px] md:h-[300px] bg-gray-100 rounded-lg"></div>
+      <div className="w-full aspect-[4/5] bg-gray-100 rounded-lg"></div>
       <div className="flex justify-between items-center w-full">
         <div className="h-4 w-12 bg-gray-200 rounded"></div>
         <div className="h-8 w-24 bg-gray-200 rounded-lg"></div>

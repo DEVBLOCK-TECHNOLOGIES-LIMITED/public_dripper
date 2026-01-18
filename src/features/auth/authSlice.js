@@ -7,12 +7,12 @@ import {
   deleteFromCart,
   getCart,
 } from "../cart/cartSlice";
-import {
-  purchaseCredits,
-  spendCredits,
-  rewardCredits,
-  getCredits,
-} from "../credits/creditsSlice";
+// import {
+//   purchaseCredits,
+//   spendCredits,
+//   rewardCredits,
+//   getCredits,
+// } from "../credits/creditsSlice";
 
 const user = JSON.parse(localStorage.getItem("shopifyeco-user"));
 
@@ -39,7 +39,7 @@ export const register = createAsyncThunk(
         error.Error;
       return thunkAPI.rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
@@ -79,7 +79,7 @@ export const updateUserProfile = createAsyncThunk(
         error.toString();
       return thunkAPI.rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const addAddress = createAsyncThunk(
@@ -96,7 +96,7 @@ export const addAddress = createAsyncThunk(
         error.toString();
       return thunkAPI.rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const removeAddress = createAsyncThunk(
@@ -113,7 +113,7 @@ export const removeAddress = createAsyncThunk(
         error.toString();
       return thunkAPI.rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const addCard = createAsyncThunk(
@@ -130,7 +130,7 @@ export const addCard = createAsyncThunk(
         error.toString();
       return thunkAPI.rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const removeCard = createAsyncThunk(
@@ -147,7 +147,7 @@ export const removeCard = createAsyncThunk(
         error.toString();
       return thunkAPI.rejectWithValue(message);
     }
-  }
+  },
 );
 
 const authSlice = createSlice({
@@ -252,28 +252,28 @@ const authSlice = createSlice({
         if (state.user && state.user.data) {
           state.user.data.cart = [];
         }
-      })
-      // Sync Credits balance to User Profile
-      .addCase(getCredits.fulfilled, (state, action) => {
-        if (state.user && state.user.data) {
-          state.user.data.balance = action.payload.balance;
-        }
-      })
-      .addCase(purchaseCredits.fulfilled, (state, action) => {
-        if (state.user && state.user.data) {
-          state.user.data.balance = action.payload.balance;
-        }
-      })
-      .addCase(spendCredits.fulfilled, (state, action) => {
-        if (state.user && state.user.data) {
-          state.user.data.balance = action.payload.balance;
-        }
-      })
-      .addCase(rewardCredits.fulfilled, (state, action) => {
-        if (state.user && state.user.data) {
-          state.user.data.balance = action.payload.balance;
-        }
       });
+    // // Sync Credits balance to User Profile
+    // .addCase(getCredits.fulfilled, (state, action) => {
+    //   if (state.user && state.user.data) {
+    //     state.user.data.balance = action.payload.balance;
+    //   }
+    // })
+    // .addCase(purchaseCredits.fulfilled, (state, action) => {
+    //   if (state.user && state.user.data) {
+    //     state.user.data.balance = action.payload.balance;
+    //   }
+    // })
+    // .addCase(spendCredits.fulfilled, (state, action) => {
+    //   if (state.user && state.user.data) {
+    //     state.user.data.balance = action.payload.balance;
+    //   }
+    // })
+    // .addCase(rewardCredits.fulfilled, (state, action) => {
+    //   if (state.user && state.user.data) {
+    //     state.user.data.balance = action.payload.balance;
+    //   }
+    // });
   },
 });
 

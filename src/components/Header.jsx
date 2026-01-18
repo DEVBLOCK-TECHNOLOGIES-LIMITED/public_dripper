@@ -12,7 +12,6 @@ import {
   FaBoxOpen,
   FaSignOutAlt,
   FaUser,
-  FaCoins,
   FaGem,
 } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,7 +21,6 @@ import { ToastContainer } from "react-toastify";
 function Header() {
   const { user } = useSelector((state) => state.auth);
   const cartItems = user?.data?.cart || [];
-  const balance = user?.data?.balance || 0;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,11 +66,6 @@ function Header() {
       name: "My Orders",
       path: "/my-orders",
       icon: <FaBoxOpen />,
-    });
-    navLinks.push({
-      name: "Credits",
-      path: "/credits",
-      icon: <FaCoins />,
     });
   }
 
@@ -147,19 +140,6 @@ function Header() {
                 </span>
               )}
             </Link>
-
-            {/* Credits Balance */}
-            {user && (
-              <Link
-                to="/credits"
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-gold-500/10 to-gold-400/5 border border-gold-500/30 rounded-full hover:border-gold-500/50 hover:bg-gold-500/20 transition-all"
-              >
-                <FaCoins className="text-gold-500" />
-                <span className="text-sm font-bold text-gold-400">
-                  {balance.toLocaleString()}
-                </span>
-              </Link>
-            )}
 
             <div className="h-6 w-[1px] bg-gold-500/20 mx-1 hidden sm:block"></div>
 
@@ -277,18 +257,7 @@ function Header() {
                     </p>
                   </div>
                 </div>
-                <Link
-                  to="/credits"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between w-full bg-gradient-to-r from-gold-500/10 to-gold-400/5 border border-gold-500/30 text-gold-500 font-bold py-3 px-4 rounded-xl hover:from-gold-500/20 hover:to-gold-400/10 transition-all"
-                >
-                  <span className="flex items-center gap-2">
-                    <FaCoins /> My Credits
-                  </span>
-                  <span className="bg-gold-500/20 text-gold-400 px-2 py-0.5 rounded-full text-sm">
-                    {balance.toLocaleString()}
-                  </span>
-                </Link>
+
                 <button
                   onClick={onLogOut}
                   className="w-full bg-noir-700 border border-rosegold-500/30 text-rosegold-400 font-bold py-3 rounded-xl hover:bg-rosegold-500/10 hover:border-rosegold-500/50 transition-all flex items-center justify-center gap-2"

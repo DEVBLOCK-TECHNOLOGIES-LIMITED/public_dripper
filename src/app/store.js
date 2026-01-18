@@ -6,7 +6,6 @@ import productReducer from "../features/products/productSlice";
 import cartReducer from "../features/cart/cartSlice";
 import shippingFeeReducer from "../features/shipping/shippingSlice";
 import orderReducer from "../features/orders/orderSlice";
-import creditsReducer from "../features/credits/creditsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +16,5 @@ export const store = configureStore({
     cart: cartReducer,
     shippingFee: shippingFeeReducer,
     orders: orderReducer,
-    credits: creditsReducer,
   },
 });
