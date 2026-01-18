@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaGem } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -45,49 +45,53 @@ function Footer() {
 
   return (
     <>
-      <footer className="w-full bg-white border-t border-gray-100 pt-20 pb-10 px-6">
+      <footer className="w-full bg-noir-900 border-t border-gold-500/20 pt-20 pb-10 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             {/* Brand Column */}
             <div className="flex flex-col gap-6">
-              <Link to="/" className="flex items-center gap-2 group">
-                <div className="w-10 h-10 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-purple-200 group-hover:rotate-12 transition-transform duration-300">
-                  <span className="font-black text-xl">S</span>
+              <Link to="/" className="flex items-center gap-3 group">
+                <div className="w-11 h-11 bg-gradient-to-tr from-gold-500 via-gold-400 to-gold-600 rounded-xl flex items-center justify-center text-noir-900 shadow-lg shadow-gold-500/30 group-hover:rotate-12 transition-transform duration-300">
+                  <FaGem className="text-lg" />
                 </div>
-                <span className="font-black text-2xl text-gray-900 tracking-tighter">
-                  Shop
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
-                    Buddy
+                <div className="flex flex-col">
+                  <span className="font-display font-bold text-2xl text-champagne-100 tracking-tight leading-none">
+                    Public
+                    <span className="text-gold-500">Dripper</span>
                   </span>
-                </span>
+                  <span className="text-[9px] font-bold text-gold-500/70 uppercase tracking-[0.25em]">
+                    Luxury Redefined
+                  </span>
+                </div>
               </Link>
-              <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-                Premium tech and gadgets curated for the modern lifestyle. We
-                bring you the future of commerce with quality guaranteed.
+              <p className="text-champagne-400 text-sm leading-relaxed max-w-xs">
+                Your exclusive destination for authenticated pre-owned luxury
+                handbags. We curate only the finest pieces from the world's most
+                prestigious maisons.
               </p>
             </div>
 
             {/* Shop Links */}
             <div className="flex flex-col gap-4">
-              <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">
-                Quick Shop
+              <h3 className="text-xs font-black text-gold-500 uppercase tracking-widest">
+                The Collection
               </h3>
               <div className="flex flex-col gap-3">
                 <Link
                   to="/catalog"
-                  className="text-gray-600 hover:text-purple-600 font-bold transition-all hover:translate-x-1"
+                  className="text-champagne-300 hover:text-gold-500 font-bold transition-all hover:translate-x-1"
                 >
-                  All Products
+                  All Handbags
                 </Link>
                 <Link
                   to="/search"
-                  className="text-gray-600 hover:text-purple-600 font-bold transition-all hover:translate-x-1"
+                  className="text-champagne-300 hover:text-gold-500 font-bold transition-all hover:translate-x-1"
                 >
-                  Search Shop
+                  Search Collection
                 </Link>
                 <Link
                   to="/credits"
-                  className="text-gray-600 hover:text-purple-600 font-bold transition-all hover:translate-x-1"
+                  className="text-champagne-300 hover:text-gold-500 font-bold transition-all hover:translate-x-1"
                 >
                   Credit Store
                 </Link>
@@ -96,24 +100,24 @@ function Footer() {
 
             {/* Support Links */}
             <div className="flex flex-col gap-4">
-              <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">
-                Support
+              <h3 className="text-xs font-black text-gold-500 uppercase tracking-widest">
+                Concierge
               </h3>
               <div className="flex flex-col gap-3">
                 <Link
                   to="/contact"
-                  className="text-gray-600 hover:text-purple-600 font-bold transition-all hover:translate-x-1"
+                  className="text-champagne-300 hover:text-gold-500 font-bold transition-all hover:translate-x-1"
                 >
                   Contact Us
                 </Link>
                 <Link
                   to="/my-orders"
-                  className="text-gray-600 hover:text-purple-600 font-bold transition-all hover:translate-x-1"
+                  className="text-champagne-300 hover:text-gold-500 font-bold transition-all hover:translate-x-1"
                 >
-                  Track My Order
+                  Track Order
                 </Link>
-                <span className="text-gray-600 font-bold cursor-pointer hover:text-purple-600 transition-all hover:translate-x-1">
-                  FAQs
+                <span className="text-champagne-300 font-bold cursor-pointer hover:text-gold-500 transition-all hover:translate-x-1">
+                  Authentication
                 </span>
               </div>
             </div>
@@ -121,11 +125,11 @@ function Footer() {
             {/* Newsletter */}
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
-                <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">
-                  Newsletter
+                <h3 className="text-xs font-black text-gold-500 uppercase tracking-widest">
+                  VIP Access
                 </h3>
-                <p className="text-sm text-gray-500 font-medium leading-relaxed">
-                  Join our newsletter for exclusive deals and tech updates.
+                <p className="text-sm text-champagne-400 font-medium leading-relaxed">
+                  Subscribe for exclusive drops and members-only pricing.
                 </p>
               </div>
               <form onSubmit={onSubmit} className="relative group">
@@ -134,11 +138,11 @@ function Footer() {
                   placeholder="Enter your email"
                   value={email}
                   onChange={onChange}
-                  className="w-full pl-5 pr-14 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-purple-500 transition-all outline-none text-sm font-bold shadow-sm"
+                  className="w-full pl-5 pr-14 py-4 bg-noir-800 border border-gold-500/30 rounded-2xl focus:bg-noir-700 focus:border-gold-500 transition-all outline-none text-sm font-bold text-champagne-100 placeholder:text-champagne-500"
                 />
                 <button
                   disabled={isLoading}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center hover:bg-purple-600 transition-all shadow-lg hover:rotate-12 disabled:opacity-50"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 rounded-xl flex items-center justify-center hover:from-gold-400 hover:to-gold-500 transition-all shadow-lg hover:rotate-12 disabled:opacity-50"
                 >
                   {isLoading ? (
                     <Loader size="sm" />
@@ -151,25 +155,24 @@ function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="pt-10 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">
-              © 2026 ShopBuddy Inc. All rights reserved.
+          <div className="pt-10 border-t border-gold-500/20 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-[10px] font-black text-champagne-500 uppercase tracking-[0.2em]">
+              © 2026 PublicDripper. All rights reserved.
             </p>
-            <div className="flex gap-8 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">
-              <span className="cursor-pointer hover:text-purple-600 transition-colors">
+            <div className="flex gap-8 text-[10px] font-black text-champagne-500 uppercase tracking-[0.2em]">
+              <span className="cursor-pointer hover:text-gold-500 transition-colors">
                 Privacy Policy
               </span>
-              <span className="cursor-pointer hover:text-purple-600 transition-colors">
+              <span className="cursor-pointer hover:text-gold-500 transition-colors">
                 Terms of Service
               </span>
-              <span className="cursor-pointer hover:text-purple-600 transition-colors">
-                Cookies
+              <span className="cursor-pointer hover:text-gold-500 transition-colors">
+                Authentication
               </span>
             </div>
           </div>
         </div>
       </footer>
-      {/* Centralized ToastContainer in Header */}
     </>
   );
 }

@@ -13,6 +13,7 @@ import {
   FaSignOutAlt,
   FaUser,
   FaCoins,
+  FaGem,
 } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
@@ -58,7 +59,7 @@ function Header() {
 
   const navLinks = [
     { name: "Home", path: "/", icon: <FaHome /> },
-    { name: "Catalog", path: "/catalog", icon: <FaStore /> },
+    { name: "Collection", path: "/catalog", icon: <FaStore /> },
     { name: "Contact", path: "/contact", icon: <FaEnvelope /> },
   ];
 
@@ -79,41 +80,44 @@ function Header() {
     <>
       <Welcome />
       <header
-        className={`w-full sticky top-0 z-40 transition-all duration-300 border-b ${
+        className={`w-full sticky top-0 z-40 transition-all duration-500 border-b bg-noir-900 border-gold-500/20 ${
           scrolled || location.pathname !== "/"
-            ? "bg-white/90 backdrop-blur-md border-gray-100 shadow-sm py-3"
-            : "bg-transparent border-transparent py-5"
+            ? "shadow-lg shadow-black/30 py-3"
+            : "py-4"
         }`}
       >
         <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group relative z-50">
-            <div className="w-10 h-10 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-purple-200 group-hover:scale-110 transition-transform duration-300">
-              <FaShoppingBag className="text-lg" />
+          <Link to="/" className="flex items-center gap-3 group relative z-50">
+            <div className="w-11 h-11 bg-gradient-to-tr from-gold-500 via-gold-400 to-gold-600 rounded-xl flex items-center justify-center text-noir-900 shadow-lg shadow-gold-500/30 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+              <FaGem className="text-lg" />
             </div>
-            <span className="font-black text-2xl text-gray-900 tracking-tighter">
-              Shop
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
-                Buddy
+            <div className="flex flex-col">
+              <span className="font-display font-bold text-2xl text-champagne-100 tracking-tight leading-none">
+                Public
+                <span className="text-gold-500">Dripper</span>
               </span>
-            </span>
+              <span className="text-[9px] font-bold text-gold-500/70 uppercase tracking-[0.25em]">
+                Luxury Redefined
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8 bg-gray-50/50 px-6 py-2 rounded-full border border-gray-100/50 backdrop-blur-sm">
+          <div className="hidden lg:flex items-center gap-8 bg-noir-800/50 px-8 py-2.5 rounded-full border border-gold-500/20 backdrop-blur-sm">
             {navLinks.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-sm font-bold uppercase tracking-widest transition-colors relative group py-1 ${
+                className={`text-sm font-bold uppercase tracking-widest transition-all relative group py-1 ${
                   location.pathname === item.path
-                    ? "text-purple-600"
-                    : "text-gray-500 hover:text-gray-900"
+                    ? "text-gold-500"
+                    : "text-champagne-300 hover:text-gold-400"
                 }`}
               >
                 {item.name}
                 <span
-                  className={`absolute bottom-0 left-0 w-full h-0.5 bg-purple-600 transform origin-left transition-transform duration-300 ${
+                  className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-gold-500 to-gold-300 transform origin-left transition-transform duration-300 ${
                     location.pathname === item.path
                       ? "scale-x-100"
                       : "scale-x-0 group-hover:scale-x-100"
@@ -127,18 +131,18 @@ function Header() {
           <div className="flex items-center gap-3 z-50">
             <Link
               to="/search"
-              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-purple-600"
+              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gold-500/10 transition-colors text-champagne-300 hover:text-gold-500"
             >
               <FaSearch className="text-lg" />
             </Link>
 
             <Link
               to="/cart"
-              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-purple-600 relative"
+              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gold-500/10 transition-colors text-champagne-300 hover:text-gold-500 relative"
             >
               <FaShoppingBag className="text-lg" />
               {cartItems?.length > 0 && (
-                <span className="absolute top-1 right-0 bg-purple-600 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center ring-2 ring-white">
+                <span className="absolute top-1 right-0 bg-gold-500 text-noir-900 text-[10px] font-black h-4 w-4 rounded-full flex items-center justify-center ring-2 ring-noir-900">
                   {cartItems.length}
                 </span>
               )}
@@ -148,46 +152,46 @@ function Header() {
             {user && (
               <Link
                 to="/credits"
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-full hover:from-amber-100 hover:to-yellow-100 transition-all"
+                className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-gold-500/10 to-gold-400/5 border border-gold-500/30 rounded-full hover:border-gold-500/50 hover:bg-gold-500/20 transition-all"
               >
-                <FaCoins className="text-amber-500" />
-                <span className="text-sm font-bold text-amber-700">
+                <FaCoins className="text-gold-500" />
+                <span className="text-sm font-bold text-gold-400">
                   {balance.toLocaleString()}
                 </span>
               </Link>
             )}
 
-            <div className="h-6 w-[1px] bg-gray-200 mx-1 hidden sm:block"></div>
+            <div className="h-6 w-[1px] bg-gold-500/20 mx-1 hidden sm:block"></div>
 
             {user ? (
               <div className="hidden sm:flex items-center gap-3 pl-2">
                 <div className="flex flex-col items-end">
-                  <span className="text-xs font-bold text-gray-900 leading-none">
+                  <span className="text-xs font-bold text-champagne-200 leading-none">
                     {user?.data?.name || "User"}
                   </span>
                   <button
                     onClick={onLogOut}
-                    className="text-[10px] font-bold text-red-500 uppercase tracking-tight hover:underline flex items-center gap-1 mt-1"
+                    className="text-[10px] font-bold text-rosegold-500 uppercase tracking-tight hover:underline flex items-center gap-1 mt-1"
                   >
                     Log Out <FaSignOutAlt />
                   </button>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-100 to-indigo-100 border-2 border-white shadow-sm flex items-center justify-center text-purple-700 font-bold">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-500/20 to-gold-400/10 border-2 border-gold-500/30 shadow-sm flex items-center justify-center text-gold-500 font-bold">
                   {(user?.data?.name?.[0] || "U").toUpperCase()}
                 </div>
               </div>
             ) : (
               <Link
                 to="/login"
-                className="hidden sm:flex bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-800 transition-all shadow-lg shadow-black/10 items-center gap-2"
+                className="hidden sm:flex bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 px-6 py-2.5 rounded-full text-sm font-bold hover:from-gold-400 hover:to-gold-500 transition-all shadow-lg shadow-gold-500/20 items-center gap-2"
               >
                 <FaUser className="text-xs" /> Sign In
               </Link>
             )}
 
-            {/* Mobile Menu Button - Replaced standard button with more stylized trigger */}
+            {/* Mobile Menu Button */}
             <button
-              className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-900 transition-colors"
+              className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-gold-500/10 text-champagne-200 transition-colors"
               onClick={() => setMobileMenuOpen(true)}
             >
               <FaBars className="text-xl" />
@@ -206,24 +210,24 @@ function Header() {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/80 backdrop-blur-sm"
           onClick={() => setMobileMenuOpen(false)}
         ></div>
 
         {/* Drawer */}
         <div
-          className={`absolute top-0 right-0 w-[300px] h-full bg-white shadow-2xl transform transition-transform duration-300 flex flex-col  ${
+          className={`absolute top-0 right-0 w-[300px] h-full bg-noir-900 shadow-2xl transform transition-transform duration-300 flex flex-col border-l border-gold-500/20 ${
             mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Drawer Header */}
-          <div className="p-6 flex items-center justify-between border-b border-gray-100">
-            <span className="font-black text-xl text-gray-900 tracking-tighter">
+          <div className="p-6 flex items-center justify-between border-b border-gold-500/20">
+            <span className="font-display font-bold text-xl text-champagne-100 tracking-tight">
               Menu
             </span>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 hover:bg-gray-100 text-gray-500 hover:text-red-500 transition-colors"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-noir-800 hover:bg-gold-500/20 text-champagne-400 hover:text-gold-500 transition-colors"
             >
               <FaTimes className="text-lg" />
             </button>
@@ -238,15 +242,15 @@ function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center gap-4 p-4 rounded-2xl transition-all ${
                   location.pathname === item.path
-                    ? "bg-purple-50 text-purple-700 font-bold shadow-sm"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium"
+                    ? "bg-gold-500/10 text-gold-500 font-bold shadow-sm border border-gold-500/20"
+                    : "text-champagne-300 hover:bg-noir-800 hover:text-gold-400 font-medium"
                 }`}
               >
                 <span
                   className={`text-xl ${
                     location.pathname === item.path
-                      ? "text-purple-600"
-                      : "text-gray-400"
+                      ? "text-gold-500"
+                      : "text-champagne-500"
                   }`}
                 >
                   {item.icon}
@@ -257,18 +261,18 @@ function Header() {
           </div>
 
           {/* Drawer Footer */}
-          <div className="p-6 border-t border-gray-100 bg-gray-50">
+          <div className="p-6 border-t border-gold-500/20 bg-noir-800/50">
             {user ? (
               <div className="space-y-4">
                 <div className="flex items-center gap-3 px-2">
-                  <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold">
+                  <div className="w-10 h-10 rounded-full bg-gold-500/20 flex items-center justify-center text-gold-500 font-bold border border-gold-500/30">
                     {(user?.data?.name?.[0] || "U").toUpperCase()}
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 text-sm">
+                    <p className="font-bold text-champagne-100 text-sm">
                       {user?.data?.name}
                     </p>
-                    <p className="text-xs text-gray-500 truncate max-w-[150px]">
+                    <p className="text-xs text-champagne-400 truncate max-w-[150px]">
                       {user?.data?.email}
                     </p>
                   </div>
@@ -276,18 +280,18 @@ function Header() {
                 <Link
                   to="/credits"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between w-full bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 text-amber-700 font-bold py-3 px-4 rounded-xl hover:from-amber-100 hover:to-yellow-100 transition-all"
+                  className="flex items-center justify-between w-full bg-gradient-to-r from-gold-500/10 to-gold-400/5 border border-gold-500/30 text-gold-500 font-bold py-3 px-4 rounded-xl hover:from-gold-500/20 hover:to-gold-400/10 transition-all"
                 >
                   <span className="flex items-center gap-2">
                     <FaCoins /> My Credits
                   </span>
-                  <span className="bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full text-sm">
+                  <span className="bg-gold-500/20 text-gold-400 px-2 py-0.5 rounded-full text-sm">
                     {balance.toLocaleString()}
                   </span>
                 </Link>
                 <button
                   onClick={onLogOut}
-                  className="w-full bg-white border border-gray-200 text-red-500 font-bold py-3 rounded-xl hover:bg-red-50 hover:border-red-100 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-noir-700 border border-rosegold-500/30 text-rosegold-400 font-bold py-3 rounded-xl hover:bg-rosegold-500/10 hover:border-rosegold-500/50 transition-all flex items-center justify-center gap-2"
                 >
                   <FaSignOutAlt /> Log Out
                 </button>
@@ -296,7 +300,7 @@ function Header() {
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full bg-black text-white font-bold py-4 rounded-xl hover:bg-gray-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10"
+                className="w-full bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 font-bold py-4 rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all flex items-center justify-center gap-2 shadow-lg shadow-gold-500/20"
               >
                 <FaUser /> Sign In / Register
               </Link>

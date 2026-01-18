@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../features/products/productSlice";
 import Product from "../components/Product";
 import ProductSkeleton from "../components/ProductSkeleton";
+import { FaGem } from "react-icons/fa";
 
 function Catalog() {
   const dispatch = useDispatch();
@@ -24,19 +25,18 @@ function Catalog() {
   const { cart } = useSelector((state) => {
     return state.cart;
   });
-  // Calculate items per row based on screen size
+
   const getItemsPerRow = () => {
     if (typeof window !== "undefined") {
-      if (window.innerWidth >= 1024) return 3; // lg and up
-      if (window.innerWidth >= 640) return 2; // sm and up
-      return 2; // mobile
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 640) return 2;
+      return 2;
     }
     return 3;
   };
 
-  // Calculate how many products to show initially
   const getInitialVisibleCount = () => {
-    return getItemsPerRow() * 4; // Show 4 rows initially
+    return getItemsPerRow() * 4;
   };
 
   useEffect(() => {
@@ -48,12 +48,14 @@ function Catalog() {
     dispatch(getProducts());
   }, [dispatch]);
 
+  // Luxury handbag categories
   const categories = [
     "All",
-    "Smartphones",
-    "Apparel",
-    "Accessories",
-    "Footwear",
+    "Hermès",
+    "Chanel",
+    "Louis Vuitton",
+    "Gucci",
+    "Dior",
   ];
 
   const filteredAndSortedProducts = React.useMemo(() => {
@@ -93,29 +95,49 @@ function Catalog() {
   }, [products?.data, sortBy, activeCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-5xl mx-auto w-full">
-        <div className="product-header text-3xl font-bold text-gray-900 mb-8">
-          Products
+    <div className="min-h-screen bg-noir-900 py-12 px-4">
+      {/* Decorative background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-0 w-72 h-72 bg-gold-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-6xl mx-auto w-full relative z-10">
+        {/* Header */}
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-2">
+            <FaGem className="text-gold-500" />
+            <span className="text-gold-500 text-sm font-bold uppercase tracking-widest">
+              The Collection
+            </span>
+          </div>
+          <h1 className="font-display text-4xl font-bold text-champagne-100">
+            Luxury Handbags
+          </h1>
         </div>
+
+        {/* Filters Row */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 w-full">
           <div className="flex items-center gap-4">
+            {/* Mobile Filter Button */}
             <button
               onClick={() => setIsFilterOpen(true)}
-              className="lg:hidden flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm hover:bg-gray-50 transition font-bold"
+              className="lg:hidden flex items-center gap-2 px-6 py-3 bg-noir-800 border border-gold-500/20 rounded-2xl hover:border-gold-500/40 transition font-bold text-champagne-200"
             >
-              <BsFilterLeft className="text-2xl text-purple-600" />
+              <BsFilterLeft className="text-2xl text-gold-500" />
               <span>Filter</span>
             </button>
-            <div className="hidden lg:flex items-center gap-2 bg-gray-100 p-1 rounded-xl">
+
+            {/* Desktop Category Pills */}
+            <div className="hidden lg:flex items-center gap-2 bg-noir-800/50 p-1.5 rounded-xl border border-gold-500/10">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
                     activeCategory === cat
-                      ? "bg-white text-purple-600 shadow-sm"
-                      : "text-gray-500 hover:text-gray-900"
+                      ? "bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 shadow-sm"
+                      : "text-champagne-400 hover:text-gold-500"
                   }`}
                 >
                   {cat}
@@ -124,16 +146,17 @@ function Catalog() {
             </div>
           </div>
 
+          {/* Sort & Results Count */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex items-center gap-3">
-              <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">
+              <span className="text-gold-500/70 font-bold text-[10px] uppercase tracking-widest">
                 Sort by
               </span>
               <select
                 name="sort_by"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-3 border border-gray-200 rounded-2xl bg-white text-gray-900 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all cursor-pointer shadow-sm"
+                className="px-4 py-3 border border-gold-500/20 rounded-xl bg-noir-800 text-champagne-100 font-bold text-sm focus:outline-none focus:border-gold-500 transition-all cursor-pointer"
               >
                 <option value="manual">Featured</option>
                 <option value="title-ascending">Alphabetically, A-Z</option>
@@ -142,11 +165,13 @@ function Catalog() {
                 <option value="price-descending">Price, high to low</option>
               </select>
             </div>
-            <p className="text-gray-400 font-bold text-[10px] uppercase tracking-widest sm:border-l sm:pl-4 sm:ml-4 border-gray-200">
-              {filteredAndSortedProducts.length} Results
+            <p className="text-gold-500/70 font-bold text-[10px] uppercase tracking-widest sm:border-l sm:pl-4 sm:ml-4 border-gold-500/20">
+              {filteredAndSortedProducts.length} Pieces
             </p>
           </div>
         </div>
+
+        {/* Products Grid */}
         <div className="w-full py-8">
           <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {isLoading && (
@@ -156,7 +181,7 @@ function Catalog() {
                 ))}
               </>
             )}
-            {isError && <span className="text-red-500">{message}</span>}
+            {isError && <span className="text-rosegold-500">{message}</span>}
             {!isLoading && !isError && filteredAndSortedProducts.length > 0
               ? filteredAndSortedProducts
                   .slice(0, visibleProducts)
@@ -169,29 +194,33 @@ function Catalog() {
                   ))
               : !isLoading &&
                 !isError && (
-                  <span className="text-lg text-gray-700 text-center col-span-full">
-                    No products found <br /> Use fewer filters or{" "}
+                  <span className="text-lg text-champagne-400 text-center col-span-full">
+                    No handbags found <br />
                     <Link
                       to="/catalog"
-                      className="text-purple-600 hover:underline"
+                      className="text-gold-500 hover:underline"
                     >
-                      remove all
+                      View all collection
                     </Link>
                   </span>
                 )}
           </div>
+
+          {/* Load More Button */}
           {!isLoading &&
             !isError &&
             filteredAndSortedProducts &&
             visibleProducts < filteredAndSortedProducts.length && (
-              <button
-                onClick={() =>
-                  setVisibleProducts(visibleProducts + getItemsPerRow() * 2)
-                }
-                className="mt-12 px-10 py-4 bg-black text-white font-black rounded-2xl hover:bg-gray-800 transition-all transform active:scale-95 shadow-2xl shadow-black/10 flex items-center justify-center gap-2"
-              >
-                Show More Results <HiOutlineArrowRight />
-              </button>
+              <div className="flex justify-center mt-12">
+                <button
+                  onClick={() =>
+                    setVisibleProducts(visibleProducts + getItemsPerRow() * 2)
+                  }
+                  className="px-10 py-4 bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 font-bold rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all transform hover:-translate-y-1 shadow-lg shadow-gold-500/20 flex items-center justify-center gap-2"
+                >
+                  Discover More <HiOutlineArrowRight />
+                </button>
+              </div>
             )}
         </div>
       </div>
@@ -200,15 +229,17 @@ function Catalog() {
       {isFilterOpen && (
         <div className="fixed inset-0 z-[100] lg:hidden">
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
             onClick={() => setIsFilterOpen(false)}
           />
-          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-[40px] p-10 transform transition-transform animate-slide-up">
+          <div className="absolute bottom-0 left-0 right-0 bg-noir-900 border-t border-gold-500/20 rounded-t-[40px] p-10 transform transition-transform animate-slide-up">
             <div className="flex justify-between items-center mb-10">
-              <h3 className="text-2xl font-black">Categories</h3>
+              <h3 className="font-display text-2xl font-bold text-champagne-100">
+                Maisons
+              </h3>
               <button
                 onClick={() => setIsFilterOpen(false)}
-                className="p-2 bg-gray-100 rounded-full"
+                className="p-2 bg-noir-800 border border-gold-500/20 rounded-full text-champagne-400 hover:text-gold-500 transition"
               >
                 <BsX className="text-3xl" />
               </button>
@@ -223,8 +254,8 @@ function Catalog() {
                   }}
                   className={`w-full text-left py-4 px-6 rounded-2xl font-bold transition-all ${
                     activeCategory === cat
-                      ? "bg-purple-600 text-white shadow-lg shadow-purple-200"
-                      : "bg-gray-50 text-gray-500"
+                      ? "bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 shadow-lg shadow-gold-500/20"
+                      : "bg-noir-800 text-champagne-400 border border-gold-500/10 hover:border-gold-500/30"
                   }`}
                 >
                   {cat}
