@@ -13,6 +13,7 @@ import {
   FaSignOutAlt,
   FaUser,
   FaGem,
+  FaCog,
 } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
@@ -66,6 +67,14 @@ function Header() {
       name: "My Orders",
       path: "/my-orders",
       icon: <FaBoxOpen />,
+    });
+  }
+
+  if (user?.data?.role === "admin") {
+    navLinks.push({
+      name: "Admin",
+      path: "/admin",
+      icon: <FaCog />,
     });
   }
 

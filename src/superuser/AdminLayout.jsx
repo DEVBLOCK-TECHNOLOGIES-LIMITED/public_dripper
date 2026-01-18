@@ -43,22 +43,22 @@ const AdminLayout = ({ children }) => {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen bg-noir-900 overflow-hidden">
       {/* Sidebar */}
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-20"
-        } bg-white border-r border-gray-200 transition-all duration-300 ease-in-out flex flex-col z-20`}
+        } bg-noir-800 border-r border-gold-500/20 transition-all duration-300 ease-in-out flex flex-col z-20`}
       >
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+        <div className="p-4 border-b border-gold-500/20 flex items-center justify-between">
           {isSidebarOpen && (
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-xl font-display font-bold text-champagne-100">
               Admin Panel
             </span>
           )}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gold-500/10 text-champagne-400 hover:text-gold-500 rounded-lg transition-colors"
           >
             {isSidebarOpen ? (
               <HiOutlineX size={20} />
@@ -75,15 +75,15 @@ const AdminLayout = ({ children }) => {
               to={item.path}
               className={`flex items-center p-3 rounded-xl transition-all duration-200 group ${
                 location.pathname === item.path
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"
+                  ? "bg-gold-500/10 text-gold-500 border border-gold-500/20"
+                  : "text-champagne-400 hover:bg-gold-500/5 hover:text-gold-400"
               }`}
             >
               <span
                 className={`${
                   location.pathname === item.path
-                    ? "text-blue-600"
-                    : "text-gray-400 group-hover:text-blue-600"
+                    ? "text-gold-500"
+                    : "text-champagne-500 group-hover:text-gold-400"
                 }`}
               >
                 {item.icon}
@@ -95,10 +95,10 @@ const AdminLayout = ({ children }) => {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-gray-100">
+        <div className="p-4 border-t border-gold-500/20">
           <Link
             to="/"
-            className="flex items-center p-3 text-sm text-gray-500 hover:text-blue-600 transition-colors"
+            className="flex items-center p-3 text-sm text-champagne-400 hover:text-gold-500 transition-colors"
           >
             <HiOutlineMenuAlt2 size={18} />
             {isSidebarOpen && (
