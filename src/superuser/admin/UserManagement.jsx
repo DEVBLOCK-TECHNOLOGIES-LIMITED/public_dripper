@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
-import { HiOutlineShieldCheck, HiOutlineStatusOnline } from "react-icons/hi";
+import { HiOutlineShieldCheck } from "react-icons/hi";
 import { toast } from "react-toastify";
 
 const UserManagement = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const response = await axios.get(`${uri}/api/admin/users`, {
         headers: { "x-user-email": currentUser?.data?.email },
@@ -19,14 +18,12 @@ const UserManagement = () => {
       setUsers(response.data.data);
     } catch (error) {
       toast.error("Failed to fetch users");
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [currentUser]);
 
   useEffect(() => {
     if (currentUser?.data?.email) fetchUsers();
-  }, [currentUser]);
+  }, [currentUser, fetchUsers]);
 
   const toggleRole = async (email, currentRole) => {
     const newRole = currentRole === "admin" ? "user" : "admin";
@@ -38,7 +35,7 @@ const UserManagement = () => {
         { role: newRole },
         {
           headers: { "x-user-email": currentUser?.data?.email },
-        }
+        },
       );
       toast.success("Role updated successfully");
       fetchUsers();

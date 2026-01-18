@@ -1,0 +1,83 @@
+
+> frontend@0.1.0 build
+> CI=false react-scripts build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+[eslint] 
+src/pages/Cart.jsx
+  Line 5:3:    'getCart' is defined but never used           no-unused-vars
+  Line 17:17:  'ToastContainer' is defined but never used    no-unused-vars
+  Line 37:12:  'resetShippingFee' is defined but never used  no-unused-vars
+
+src/pages/Catalog.jsx
+  Line 13:24:  'setSearchParams' is assigned a value but never used  no-unused-vars
+
+src/pages/Checkout.jsx
+  Line 13:12:  'resetShipping' is defined but never used                                                                              no-unused-vars
+  Line 17:3:   'getCredits' is defined but never used                                                                                 no-unused-vars
+  Line 21:17:  'ToastContainer' is defined but never used                                                                             no-unused-vars
+  Line 30:3:   'HiOutlineGift' is defined but never used                                                                              no-unused-vars
+  Line 38:3:   'CREDITS_PER_DOLLAR' is defined but never used                                                                         no-unused-vars
+  Line 114:6:  React Hook useEffect has a missing dependency: 'getShippingAddress'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/Contact.jsx
+  Line 3:17:  'ToastContainer' is defined but never used  no-unused-vars
+
+src/pages/CreditStore.jsx
+  Line 12:17:  'ToastContainer' is defined but never used  no-unused-vars
+
+src/pages/Login.jsx
+  Line 6:17:  'ToastContainer' is defined but never used  no-unused-vars
+
+src/pages/Register.jsx
+  Line 6:17:  'ToastContainer' is defined but never used  no-unused-vars
+
+src/pages/Search.jsx
+  Line 5:10:   'Link' is defined but never used               no-unused-vars
+  Line 11:11:  'user' is assigned a value but never used      no-unused-vars
+  Line 12:29:  'products' is assigned a value but never used  no-unused-vars
+
+src/superuser/admin/CreditManagement.jsx
+  Line 19:10:  'loading' is assigned a value but never used     no-unused-vars
+  Line 19:19:  'setLoading' is assigned a value but never used  no-unused-vars
+
+src/superuser/admin/OrderManagement.jsx
+  Line 9:3:   'HiOutlineCheckCircle' is defined but never used                                                                no-unused-vars
+  Line 34:6:  React Hook useEffect has a missing dependency: 'fetchOrders'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/superuser/admin/ProductManagement.jsx
+  Line 20:10:  'loading' is assigned a value but never used     no-unused-vars
+  Line 20:19:  'setLoading' is assigned a value but never used  no-unused-vars
+
+src/superuser/admin/UserManagement.jsx
+  Line 6:32:   'HiOutlineStatusOnline' is defined but never used                                                              no-unused-vars
+  Line 12:10:  'loading' is assigned a value but never used                                                                   no-unused-vars
+  Line 29:6:   React Hook useEffect has a missing dependency: 'fetchUsers'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/utils/creditConfig.js
+  Line 77:1:  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  115.99 kB  build/static/js/main.201e92c1.js
+  14.14 kB   build/static/css/main.e11fe128.css
+  1.77 kB    build/static/js/787.9e9f4ffd.chunk.js
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+

@@ -19,7 +19,7 @@ export const calculateCartCredits = (cartItems) => {
   if (!cartItems || cartItems.length === 0) return 0;
   const total = cartItems.reduce(
     (acc, item) => acc + parseFloat(item.price || 0),
-    0
+    0,
   );
   return dollarToCredits(total);
 };
@@ -74,7 +74,7 @@ export const getProductCreditValue = (price) => {
   return `${formatCredits(credits)} credits`;
 };
 
-export default {
+const creditSystem = {
   CREDITS_PER_DOLLAR,
   dollarToCredits,
   creditsToDollars,
@@ -87,3 +87,5 @@ export default {
   getPackageCredits,
   getProductCreditValue,
 };
+
+export default creditSystem;

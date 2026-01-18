@@ -8,17 +8,10 @@ import {
 } from "../features/orders/orderSlice";
 import { addAddress, addCard } from "../features/auth/authSlice";
 import { getCart } from "../features/cart/cartSlice";
-import {
-  getShippingFee,
-  reset as resetShipping,
-} from "../features/shipping/shippingSlice";
-import {
-  spendCredits,
-  getCredits,
-  rewardCredits,
-} from "../features/credits/creditsSlice";
+import { getShippingFee } from "../features/shipping/shippingSlice";
+import { spendCredits, rewardCredits } from "../features/credits/creditsSlice";
 import Loader from "../components/Loader";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import {
   HiOutlineLocationMarker,
   HiOutlineCreditCard,
@@ -27,7 +20,6 @@ import {
   HiOutlineShieldCheck,
   HiCheckCircle,
   HiOutlineSparkles,
-  HiOutlineGift,
 } from "react-icons/hi";
 import { FaCoins } from "react-icons/fa";
 import {
@@ -35,7 +27,6 @@ import {
   calculateCreditDiscount,
   calculateEarnedCredits,
   formatCredits,
-  CREDITS_PER_DOLLAR,
 } from "../utils/creditConfig";
 
 function Checkout() {
@@ -101,17 +92,25 @@ function Checkout() {
 
   // Dynamic Shipping Fee Fetching
   useEffect(() => {
-    const address = getShippingAddress();
-    if (address.state && cartItems?.length > 0) {
+    // Logic inlined to avoid adding getShippingAddress to dependencies
+    let currentState = formData.state;
+    if (
+      selectedAddressIndex !== -1 &&
+      user?.data?.addresses?.[selectedAddressIndex]
+    ) {
+      currentState = user.data.addresses[selectedAddressIndex].state;
+    }
+
+    if (currentState && cartItems?.length > 0) {
       dispatch(
         getShippingFee({
           originState: "ogun",
-          destinationState: address.state,
+          destinationState: currentState,
           itemsCount: cartItems.length,
-        })
+        }),
       );
     }
-  }, [selectedAddressIndex, formData.state, cartItems?.length, dispatch]);
+  }, [selectedAddressIndex, formData.state, user, cartItems?.length, dispatch]);
 
   useEffect(() => {
     if (backendShippingFee?.data?.shippingFee !== undefined) {
@@ -183,8 +182,8 @@ function Checkout() {
     if (payWithCredits && creditBalance < creditsNeeded) {
       toast.error(
         `Insufficient credits. You need ${formatCredits(
-          creditsNeeded
-        )} credits but have ${formatCredits(creditBalance)}.`
+          creditsNeeded,
+        )} credits but have ${formatCredits(creditBalance)}.`,
       );
       return;
     }
@@ -206,7 +205,7 @@ function Checkout() {
         addAddress({
           email: user.data.email,
           address: shippingAddress,
-        })
+        }),
       );
     }
 
@@ -221,7 +220,7 @@ function Checkout() {
             cvv: formData.cvv,
             type: "visa", // simplified
           },
-        })
+        }),
       );
     }
 
@@ -233,7 +232,7 @@ function Checkout() {
             email: user.data.email,
             amount: creditsNeeded,
             description: `Order payment - ${cartItems.length} items`,
-          })
+          }),
         ).unwrap();
       } catch (error) {
         toast.error("Failed to process credits payment");
@@ -247,7 +246,7 @@ function Checkout() {
             email: user.data.email,
             amount: creditsToEarn,
             description: `Loyalty reward - Order with ${cartItems.length} items`,
-          })
+          }),
         );
       } catch (error) {
         console.error("Failed to award loyalty credits", error);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import uri from "../../features/config";
@@ -16,7 +16,6 @@ const CreditManagement = () => {
   const { user } = useSelector((state) => state.auth);
   const packages = useSelector((state) => state.credits.packages);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getPackages());
@@ -25,7 +24,7 @@ const CreditManagement = () => {
   const handleDelete = async (id) => {
     if (
       !window.confirm(
-        "Are you sure? This will remove the package from the store."
+        "Are you sure? This will remove the package from the store.",
       )
     )
       return;

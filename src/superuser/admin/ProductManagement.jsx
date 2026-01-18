@@ -17,7 +17,7 @@ const ProductManagement = () => {
   const productsResult = useSelector((state) => state.products?.products?.data);
   const products = Array.isArray(productsResult) ? productsResult : [];
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const ProductManagement = () => {
   const filteredProducts = products.filter(
     (p) =>
       p.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.code?.toLowerCase().includes(searchTerm.toLowerCase())
+      p.code?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (

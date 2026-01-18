@@ -9,7 +9,7 @@ import {
   getHistory,
   reset,
 } from "../features/credits/creditsSlice";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import {
   HiOutlineCreditCard,
   HiOutlineSparkles,
@@ -76,7 +76,7 @@ function CreditStore() {
         packageId: selectedPackage.id,
         paymentMethod: "card",
         idempotencyKey,
-      })
+      }),
     );
   };
 
@@ -200,7 +200,7 @@ function CreditStore() {
 
                 <div
                   className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${getPackageColor(
-                    pkg.id
+                    pkg.id,
                   )} flex items-center justify-center text-white mb-4 shadow-lg`}
                 >
                   {getPackageIcon(pkg.id)}

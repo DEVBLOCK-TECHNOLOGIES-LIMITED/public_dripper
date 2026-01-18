@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { filterBySearch } from "../features/products/productSlice";
-import { Link } from "react-router-dom";
+
 import Product from "../components/Product";
 
 function Search() {
   const [search, setSearch] = useState("");
+
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { filteredProducts, products } = useSelector((state) => state.products);
+
+  const { filteredProducts } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (search.trim()) {

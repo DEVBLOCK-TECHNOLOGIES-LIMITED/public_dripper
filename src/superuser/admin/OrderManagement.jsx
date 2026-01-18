@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
-import {
-  HiOutlineRefresh,
-  HiOutlineEye,
-  HiOutlineCheckCircle,
-} from "react-icons/hi";
+import { HiOutlineRefresh, HiOutlineEye } from "react-icons/hi";
 import { toast } from "react-toastify";
 
 const OrderManagement = () => {
@@ -15,7 +11,7 @@ const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(`${uri}/api/admin/orders`, {
@@ -27,11 +23,11 @@ const OrderManagement = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     if (user?.data?.email) fetchOrders();
-  }, [user]);
+  }, [user, fetchOrders]);
 
   const updateStatus = async (id, status) => {
     try {
@@ -40,7 +36,7 @@ const OrderManagement = () => {
         { status },
         {
           headers: { "x-user-email": user?.data?.email },
-        }
+        },
       );
       toast.success(`Order marked as ${status}`);
       fetchOrders();
@@ -120,7 +116,7 @@ const OrderManagement = () => {
                     <td className="px-6 py-5">
                       <span
                         className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider ${getStatusStyle(
-                          order.status
+                          order.status,
                         )}`}
                       >
                         {order.status || "Processing"}

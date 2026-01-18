@@ -10,7 +10,7 @@ import { FaGem } from "react-icons/fa";
 
 function Catalog() {
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const initialCategory = searchParams.get("category") || "All";
 
   const [sortBy, setSortBy] = React.useState("title-ascending");
@@ -19,7 +19,7 @@ function Catalog() {
   const [isFilterOpen, setIsFilterOpen] = React.useState(false);
 
   const { products, isError, message, isLoading } = useSelector(
-    (state) => state.products
+    (state) => state.products,
   );
 
   const { cart } = useSelector((state) => {
@@ -68,18 +68,18 @@ function Catalog() {
       items = items.filter(
         (product) =>
           (product.category || product.categoryName || "").toLowerCase() ===
-          activeCategory.toLowerCase()
+          activeCategory.toLowerCase(),
       );
     }
 
     // Sort
     if (sortBy === "title-ascending" || sortBy === "manual") {
       items.sort((a, b) =>
-        (a.name || a.title || "").localeCompare(b.name || b.title || "")
+        (a.name || a.title || "").localeCompare(b.name || b.title || ""),
       );
     } else if (sortBy === "title-descending") {
       items.sort((a, b) =>
-        (b.name || b.title || "").localeCompare(a.name || a.title || "")
+        (b.name || b.title || "").localeCompare(a.name || a.title || ""),
       );
     } else if (sortBy === "price-ascending") {
       items.sort((a, b) => parseFloat(a.price || 0) - parseFloat(b.price || 0));

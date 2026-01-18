@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
-  getCart,
   removeFromCart,
   deleteCart,
   reset,
@@ -14,7 +13,7 @@ import {
   removeCard,
 } from "../features/auth/authSlice";
 import { useNavigate, Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import Modal from "../components/Modal";
 import {
@@ -32,10 +31,7 @@ import {
   FaCoins,
 } from "react-icons/fa";
 import { HiOutlineSparkles, HiArrowRight } from "react-icons/hi";
-import {
-  getShippingFee,
-  reset as resetShippingFee,
-} from "../features/shipping/shippingSlice";
+import { getShippingFee } from "../features/shipping/shippingSlice";
 
 const CartModal = ({ cart }) => {
   return (
@@ -223,7 +219,7 @@ function Cart() {
   const { isLoading } = useSelector((state) => state.cart);
   const cartItems = user?.data?.cart || [];
   const { shippingFee, isLoading: isShippingLoading } = useSelector(
-    (state) => state.shippingFee
+    (state) => state.shippingFee,
   );
   const creditBalance = user?.data?.balance || 0;
 
@@ -261,7 +257,7 @@ function Cart() {
           originState: "ogun",
           destinationState: destinationState,
           itemsCount: cartItems.length,
-        })
+        }),
       );
     }
   }, [cartItems.length, dispatch, user?.data?.addresses, user?.data?.state]);
@@ -517,8 +513,8 @@ function Cart() {
                       {Math.ceil(
                         cartItems.reduce(
                           (acc, item) => acc + Number(item.price),
-                          0
-                        ) * 100
+                          0,
+                        ) * 100,
                       ).toLocaleString()}{" "}
                       credits)
                     </span>
@@ -590,7 +586,7 @@ function Cart() {
                   $
                   {cartItems?.reduce(
                     (acc, item) => acc + Number(item.price),
-                    0
+                    0,
                   )}
                 </span>
               </div>
@@ -610,7 +606,7 @@ function Cart() {
                 {cartItems && cartItems.length > 0
                   ? cartItems?.reduce(
                       (acc, item) => acc + Number(item.price),
-                      0
+                      0,
                     ) + shipCost || 0
                   : 0}
               </span>
