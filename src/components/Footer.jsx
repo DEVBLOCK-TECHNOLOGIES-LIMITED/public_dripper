@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaArrowRight, FaGem } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { useToast } from "../context/ToastContext";
 import { subscribe, reset } from "../features/subscription/subscrptionSlice";
-import "react-toastify/dist/ReactToastify.css";
 import Loader from "./Loader";
 
-function Footer() {
+const Footer = () => {
+  const { toast } = useToast();
+  const form = useRef();
   const [email, setEmail] = useState("");
 
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function Footer() {
     dispatch(
       subscribe({
         email: email,
-      })
+      }),
     );
   };
 
@@ -175,6 +176,6 @@ function Footer() {
       </footer>
     </>
   );
-}
+};
 
 export default Footer;

@@ -17,7 +17,6 @@ import {
 } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
-import { ToastContainer } from "react-toastify";
 
 function Header() {
   const { user } = useSelector((state) => state.auth);
@@ -286,8 +285,6 @@ function Header() {
           </div>
         </div>
       </div>
-
-      <ToastContainer />
     </>
   );
 }

@@ -22,7 +22,7 @@ import axios from "axios";
 import uri from "../features/config";
 
 import Loader from "../components/Loader";
-import { toast } from "react-toastify";
+import { useToast } from "../context/ToastContext";
 import {
   HiOutlineLocationMarker,
   HiOutlineCreditCard,
@@ -60,6 +60,7 @@ function CheckoutForm({
 }) {
   const stripe = useStripe();
   const elements = useElements();
+  const { toast } = useToast();
   const dispatch = useDispatch();
   const [isProcessing, setIsProcessing] = useState(false); // Local loading for Stripe
 

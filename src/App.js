@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { ToastProvider } from "./context/ToastContext";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -41,7 +42,7 @@ function App() {
     dispatch(getProducts());
   }, [dispatch]);
   return (
-    <>
+    <ToastProvider>
       <Header />
       <Routes>
         <Route index element={<Dashboard />} />
@@ -68,7 +69,7 @@ function App() {
       </Routes>
       <Footer />
       <FloatButton />
-    </>
+    </ToastProvider>
   );
 }
 

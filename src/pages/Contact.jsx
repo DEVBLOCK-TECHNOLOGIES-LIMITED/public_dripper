@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../context/ToastContext";
 import { sendComment, reset } from "../features/comments/commentSlice";
 import Loader from "../components/Loader";
 import { FaGem, FaEnvelope } from "react-icons/fa";
@@ -14,6 +13,7 @@ function Contact() {
   });
 
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const { name, email, comment } = formData;
   const { isError, isLoading, isSuccess, message } = useSelector((state) => {
@@ -35,7 +35,7 @@ function Contact() {
     }
 
     dispatch(reset());
-  }, [isError, message, dispatch, isSuccess]);
+  }, [isError, message, dispatch, isSuccess, toast]);
 
   const onChange = (e) => {
     setFormData((prevState) => {

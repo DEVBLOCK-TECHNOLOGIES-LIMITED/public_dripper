@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register, reset, loginWithGoogle } from "../features/auth/authSlice";
 import { GoogleLogin } from "@react-oauth/google";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../context/ToastContext";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import { FaGem } from "react-icons/fa";
@@ -24,6 +23,7 @@ function Register() {
   });
 
   const dispatch = useDispatch();
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   const onChange = (e) => {

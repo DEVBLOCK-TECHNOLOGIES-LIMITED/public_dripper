@@ -9,12 +9,13 @@ import {
   HiOutlineTrash,
   HiOutlineSearch,
 } from "react-icons/hi";
-import { toast } from "react-toastify";
+import { useToast } from "../../context/ToastContext";
 import { getProducts } from "../../features/products/productSlice";
 import Modal from "../../components/Modal";
 
 const ProductManagement = () => {
   const { user } = useSelector((state) => state.auth);
+  const { toast } = useToast();
   const productsResult = useSelector((state) => state.products?.products?.data);
   const products = Array.isArray(productsResult) ? productsResult : [];
   const dispatch = useDispatch();

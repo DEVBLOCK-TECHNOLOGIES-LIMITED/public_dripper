@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
 import { HiOutlinePlus, HiOutlineTrash, HiOutlineSearch } from "react-icons/hi";
-import { toast } from "react-toastify";
+import { useToast } from "../../context/ToastContext";
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
 

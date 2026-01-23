@@ -7,7 +7,7 @@ import {
   reset,
 } from "../features/cart/cartSlice";
 import { useNavigate, Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useToast } from "../context/ToastContext";
 import Loader from "../components/Loader";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { HiArrowRight } from "react-icons/hi";
@@ -57,6 +57,7 @@ const CartModal = ({ cart }) => {
 const CartProduct = ({ product, cart }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const { user } = useSelector((state) => state.auth);
   const [isCurrentlyAdding, setIsCurrentlyAdding] = useState(false);
@@ -158,6 +159,7 @@ const CartProduct = ({ product, cart }) => {
 function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const [discountCode, setDiscountCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(null);

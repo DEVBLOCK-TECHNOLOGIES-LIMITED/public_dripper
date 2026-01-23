@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProduct, reset } from "../features/products/productSlice";
 import { addToCart } from "../features/cart/cartSlice";
 import Loader from "../components/Loader";
-import { toast } from "react-toastify";
+import { useToast } from "../context/ToastContext";
 import { HiArrowLeft, HiOutlineShoppingBag } from "react-icons/hi";
 
 function ProductDetail() {
   const { code } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const [quantity, setQuantity] = useState(1);
 

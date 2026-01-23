@@ -4,11 +4,12 @@ import { useSelector } from "react-redux";
 import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
 import { HiOutlineRefresh, HiOutlineEye } from "react-icons/hi";
-import { toast } from "react-toastify";
+import { useToast } from "../../context/ToastContext";
 
 const OrderManagement = () => {
   const { user } = useSelector((state) => state.auth);
   const [orders, setOrders] = useState([]);
+  const { toast } = useToast();
   const [loading, setLoading] = useState(true);
 
   const fetchOrders = useCallback(async () => {
@@ -23,7 +24,7 @@ const OrderManagement = () => {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [user, toast]);
 
   useEffect(() => {
     if (user?.data?.email) fetchOrders();

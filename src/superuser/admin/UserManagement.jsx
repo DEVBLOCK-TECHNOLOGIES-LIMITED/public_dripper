@@ -4,11 +4,12 @@ import { useSelector } from "react-redux";
 import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
 import { HiOutlineShieldCheck } from "react-icons/hi";
-import { toast } from "react-toastify";
+import { useToast } from "../../context/ToastContext";
 
 const UserManagement = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
+  const { toast } = useToast();
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -19,7 +20,7 @@ const UserManagement = () => {
     } catch (error) {
       toast.error("Failed to fetch users");
     }
-  }, [currentUser]);
+  }, [currentUser, toast]);
 
   useEffect(() => {
     if (currentUser?.data?.email) fetchUsers();
