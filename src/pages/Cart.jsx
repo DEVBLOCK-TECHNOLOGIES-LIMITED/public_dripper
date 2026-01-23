@@ -12,9 +12,9 @@ import Loader from "../components/Loader";
 import {
   RiDeleteBinLine,
   RiErrorWarningLine,
-  RiCoupon3Fill,
+  RiErrorWarningLine,
 } from "react-icons/ri";
-import { HiOutlineSparkles, HiArrowRight } from "react-icons/hi";
+import { HiArrowRight } from "react-icons/hi";
 import { getShippingFee } from "../features/shipping/shippingSlice";
 import axios from "axios";
 import uri from "../features/config";
@@ -163,13 +163,6 @@ function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [checkCard, setCheckCard] = useState({
-    visa: false,
-    mastercard: false,
-    amex: false,
-  });
-
-  const [gift, setGift] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(null);
   const [discountLoading, setDiscountLoading] = useState(false);

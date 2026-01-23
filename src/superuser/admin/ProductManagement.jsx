@@ -256,15 +256,6 @@ const ProductManagement = () => {
                 className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
                 placeholder="0.00"
               />
-              <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleInputChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
-                placeholder="0.00"
-              />
             </div>
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-1">

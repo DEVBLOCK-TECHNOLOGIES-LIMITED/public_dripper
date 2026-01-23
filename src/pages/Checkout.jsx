@@ -29,7 +29,6 @@ import {
   HiOutlineLockClosed,
   HiOutlineShieldCheck,
   HiCheckCircle,
-  HiCheckCircle,
 } from "react-icons/hi";
 
 const OrderSummary = () => {
