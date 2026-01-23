@@ -217,8 +217,148 @@ function CheckoutForm({
               Destination
             </h2>
           </div>
-          {/* ... Address Selection Logic ... */}
-          {/* To reuse existing code inside replace block, I should target specific Step 2 */}
+
+          <div className="grid grid-cols-1 gap-4 mb-6">
+            {/* Existing Addresses */}
+            {user?.data?.addresses?.map((addr, idx) => (
+              <div
+                key={idx}
+                onClick={() => setSelectedAddressIndex(idx)}
+                className={`p-4 rounded-2xl border cursor-pointer flex items-center justify-between transition-all ${
+                  selectedAddressIndex === idx
+                    ? "border-gold-500 bg-gold-500/10 shadow-[0_0_15px_rgba(234,179,8,0.1)]"
+                    : "border-gold-500/20 hover:border-gold-500/50 bg-noir-900/50"
+                }`}
+              >
+                <div className="space-y-1">
+                  <p className="font-bold text-sm text-champagne-100">
+                    {user.data.firstName || "User"}'s Location {idx + 1}
+                  </p>
+                  <p className="text-xs text-champagne-400">
+                    {addr.address}, {addr.city}, {addr.state} {addr.zipCode}
+                  </p>
+                </div>
+                {selectedAddressIndex === idx && (
+                  <HiCheckCircle className="text-2xl text-gold-500" />
+                )}
+              </div>
+            ))}
+
+            {/* New Address Option */}
+            <div
+              onClick={() => setSelectedAddressIndex(-1)}
+              className={`p-4 rounded-2xl border cursor-pointer flex items-center justify-between transition-all ${
+                selectedAddressIndex === -1
+                  ? "border-gold-500 bg-gold-500/10 shadow-[0_0_15px_rgba(234,179,8,0.1)]"
+                  : "border-gold-500/20 hover:border-gold-500/50 bg-noir-900/50"
+              }`}
+            >
+              <p className="font-bold text-sm text-champagne-100">
+                + Deliver to a new address
+              </p>
+              {selectedAddressIndex === -1 && (
+                <HiCheckCircle className="text-2xl text-gold-500" />
+              )}
+            </div>
+          </div>
+
+          {/* New Address Form */}
+          {selectedAddressIndex === -1 && (
+            <div className="space-y-4 animate-fade-in-up">
+              <div>
+                <label className="text-xs font-bold text-gold-500 uppercase tracking-wider block mb-2">
+                  Street Address
+                </label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={onChange}
+                  className="w-full p-4 rounded-xl input-luxury text-base bg-noir-800 border-gold-500/30 text-champagne-100 placeholder:text-champagne-500/50"
+                  placeholder="123 Luxury Lane"
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-gold-500 uppercase tracking-wider block mb-2">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={formData.city}
+                    onChange={onChange}
+                    className="w-full p-4 rounded-xl input-luxury text-base bg-noir-800 border-gold-500/30 text-champagne-100 placeholder:text-champagne-500/50"
+                    placeholder="New York"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-gold-500 uppercase tracking-wider block mb-2">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={formData.state}
+                    onChange={onChange}
+                    className="w-full p-4 rounded-xl input-luxury text-base bg-noir-800 border-gold-500/30 text-champagne-100 placeholder:text-champagne-500/50"
+                    placeholder="NY"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-gold-500 uppercase tracking-wider block mb-2">
+                    Zip Code
+                  </label>
+                  <input
+                    type="text"
+                    name="zipCode"
+                    value={formData.zipCode}
+                    onChange={onChange}
+                    className="w-full p-4 rounded-xl input-luxury text-base bg-noir-800 border-gold-500/30 text-champagne-100 placeholder:text-champagne-500/50"
+                    placeholder="10001"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-gold-500 uppercase tracking-wider block mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={onChange}
+                    className="w-full p-4 rounded-xl input-luxury text-base bg-noir-800 border-gold-500/30 text-champagne-100 placeholder:text-champagne-500/50"
+                    placeholder="+1 (555) 000-0000"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <input
+                  type="checkbox"
+                  id="saveAddress"
+                  checked={saveAddress}
+                  onChange={(e) => setSaveAddress(e.target.checked)}
+                  className="w-5 h-5 accent-gold-500 rounded-lg cursor-pointer bg-noir-900 border-gold-500/30"
+                />
+                <label
+                  htmlFor="saveAddress"
+                  className="text-sm font-bold text-champagne-300 cursor-pointer"
+                >
+                  Save this address for future use
+                </label>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Step 2: Payment */}
@@ -408,7 +548,9 @@ function Checkout() {
     cardNumber: "",
     expiry: "",
     cvv: "",
+    cvv: "",
     cardName: "",
+    phoneNumber: "",
   });
 
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
