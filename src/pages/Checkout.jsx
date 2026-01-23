@@ -15,6 +15,7 @@ import {
   PaymentElement,
   useStripe,
   useElements,
+  ExpressCheckoutElement,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import uri from "../features/config";
@@ -428,7 +429,18 @@ function CheckoutForm({
           {/* Show if no saved card selected OR if no saved cards exist */}
           {(stripeCards.length === 0 || selectedStripeCard === null) && (
             <div className="space-y-6 animate-fade-in-up">
-              <PaymentElement />
+              <ExpressCheckoutElement />
+              <div className="relative flex py-5 items-center">
+                <div className="flex-grow border-t border-gold-500/20"></div>
+                <span className="flex-shrink-0 mx-4 text-champagne-400 text-xs uppercase font-bold tracking-widest">
+                  Or pay with card
+                </span>
+                <div className="flex-grow border-t border-gold-500/20"></div>
+              </div>
+              <PaymentElement
+                id="payment-element"
+                options={{ layout: "tabs" }}
+              />
               <div className="flex items-center gap-3 pt-2">
                 <input
                   type="checkbox"
