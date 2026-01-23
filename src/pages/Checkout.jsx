@@ -280,10 +280,7 @@ function Checkout() {
           </div>
         </div>
 
-        <form
-          onSubmit={onSubmit}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-10"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 space-y-8">
             {/* Step 1: Shipping */}
             <div className="bg-noir-800/50 p-8 rounded-3xl border border-gold-500/10 shadow-lg backdrop-blur-sm animate-fade-in-up">
@@ -570,7 +567,8 @@ function Checkout() {
               {/* Only show default submit button if NOT using Stripe (e.g. using saved card) */}
               {selectedCardIndex !== -1 && (
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={onSubmit}
                   disabled={isLoading}
                   className="w-full bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 py-5 rounded-2xl font-black mt-10 hover:from-gold-400 hover:to-gold-500 transition-all transform active:scale-[0.98] flex items-center justify-center gap-3 shadow-lg shadow-gold-500/20 disabled:opacity-50"
                 >
@@ -593,7 +591,7 @@ function Checkout() {
               )}
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
