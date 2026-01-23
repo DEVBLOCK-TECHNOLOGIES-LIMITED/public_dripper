@@ -51,12 +51,6 @@ const Dashboard = () => {
       icon: <HiOutlineCurrencyDollar size={24} />,
       color: "bg-gold-500",
     },
-    {
-      title: "Credits in Circulation",
-      value: stats?.totalCredits?.toLocaleString() || 0,
-      icon: <HiOutlineTrendingUp size={24} />,
-      color: "bg-gold-500",
-    },
   ];
 
   if (loading)
