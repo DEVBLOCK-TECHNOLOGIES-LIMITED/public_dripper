@@ -11,6 +11,7 @@ import {
 } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { getProducts } from "../../features/products/productSlice";
+import Modal from "../../components/Modal";
 
 const ProductManagement = () => {
   const { user } = useSelector((state) => state.auth);
@@ -19,10 +20,64 @@ const ProductManagement = () => {
   const dispatch = useDispatch();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    category: "",
+    image: "",
+    code: "", // Read-only for edit
+  });
 
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleAdd = () => {
+    setFormData({ name: "", price: "", category: "", image: "", code: "" });
+    setIsEditing(false);
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (product) => {
+    setFormData({
+      name: product.name,
+      price: product.price,
+      category: product.category,
+      image: product.image,
+      code: product.code,
+    });
+    setIsEditing(true);
+    setIsModalOpen(true);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (isEditing) {
+        await axios.put(
+          `${uri}/api/admin/products/${formData.code}`,
+          formData,
+          { headers: { "x-user-email": user?.data?.email } },
+        );
+        toast.success("Product updated successfully");
+      } else {
+        await axios.post(`${uri}/api/admin/products`, formData, {
+          headers: { "x-user-email": user?.data?.email },
+        });
+        toast.success("Product added successfully");
+      }
+      setIsModalOpen(false);
+      dispatch(getProducts());
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to save product");
+    }
+  };
 
   const handleDelete = async (code) => {
     if (!window.confirm("Are you sure you want to delete this product?"))
@@ -56,7 +111,10 @@ const ProductManagement = () => {
               Manage your inventory and product listings.
             </p>
           </div>
-          <button className="flex items-center justify-center gap-2 px-6 py-3 bg-gold-500 text-noir-900 font-bold rounded-xl hover:bg-gold-400 transition-all shadow-lg shadow-gold-500/20">
+          <button
+            onClick={handleAdd}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-gold-500 text-noir-900 font-bold rounded-xl hover:bg-gold-400 transition-all shadow-lg shadow-gold-500/20"
+          >
             <HiOutlinePlus size={20} />
             <span>Add New Product</span>
           </button>
@@ -129,7 +187,10 @@ const ProductManagement = () => {
                     </td>
                     <td className="px-6 py-5">
                       <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button className="p-2 text-champagne-400 hover:text-gold-500 hover:bg-gold-500/10 rounded-lg transition-all transform hover:scale-110">
+                        <button
+                          onClick={() => handleEdit(product)}
+                          className="p-2 text-champagne-400 hover:text-gold-500 hover:bg-gold-500/10 rounded-lg transition-all transform hover:scale-110"
+                        >
                           <HiOutlinePencil size={18} />
                         </button>
                         <button
@@ -147,6 +208,93 @@ const ProductManagement = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={isEditing ? "Edit Product" : "Add New Product"}
+      >
+        <form onSubmit={handleSubmit} className="space-y-4 text-black">
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">
+              Product Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
+              placeholder="e.g. Luxury Watch"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">
+                Price ($)
+              </label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
+                placeholder="0.00"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">
+                Category
+              </label>
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
+                placeholder="e.g. Accessories"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">
+              Image URL
+            </label>
+            <input
+              type="url"
+              name="image"
+              value={formData.image}
+              onChange={handleInputChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
+              placeholder="https://..."
+            />
+          </div>
+          {isEditing && (
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">
+                Product Code (Read-only)
+              </label>
+              <input
+                type="text"
+                name="code"
+                value={formData.code}
+                readOnly
+                className="w-full p-3 bg-gray-100 border border-gray-300 rounded-xl text-gray-500 cursor-not-allowed"
+              />
+            </div>
+          )}
+          <button
+            type="submit"
+            className="w-full py-3 bg-gold-500 text-white font-bold rounded-xl hover:bg-gold-600 transition-all shadow-lg"
+          >
+            {isEditing ? "Update Product" : "Create Product"}
+          </button>
+        </form>
+      </Modal>
     </AdminLayout>
   );
 };
