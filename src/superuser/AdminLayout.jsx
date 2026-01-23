@@ -35,11 +35,6 @@ const AdminLayout = ({ children }) => {
       path: "/admin/users",
       icon: <HiOutlineUsers size={20} />,
     },
-    {
-      title: "Credits",
-      path: "/admin/credits",
-      icon: <HiOutlineCash size={20} />,
-    },
   ];
 
   return (
