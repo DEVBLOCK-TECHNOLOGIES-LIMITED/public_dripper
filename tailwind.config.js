@@ -52,6 +52,7 @@ module.exports = {
       fontFamily: {
         display: ["Playfair Display", "Georgia", "serif"],
         sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        opensans: ['"Open Sans"', "sans-serif"],
       },
       animation: {
         shimmer: "shimmer 2s linear infinite",

@@ -515,7 +515,7 @@ function CheckoutForm({
                 <span className="text-2xl font-display font-bold text-champagne-100">
                   Total
                 </span>
-                <span className="text-2xl font-black text-gold-500">
+                <span className="text-2xl font-black font-opensans text-gold-500">
                   ${finalTotal.toFixed(2)}
                 </span>
               </div>
