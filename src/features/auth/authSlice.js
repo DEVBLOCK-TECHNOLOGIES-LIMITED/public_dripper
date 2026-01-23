@@ -14,7 +14,7 @@ import {
 //   getCredits,
 // } from "../credits/creditsSlice";
 
-const user = JSON.parse(localStorage.getItem("shopifyeco-user"));
+const user = JSON.parse(localStorage.getItem("public-dripper-user"));
 
 const initialState = {
   user: user ? user : null,
