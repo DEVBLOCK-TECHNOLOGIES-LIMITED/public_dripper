@@ -174,7 +174,7 @@ const ProductManagement = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-5 font-black text-champagne-100">
+                    <td className="px-6 py-5 font-sans font-black text-champagne-100">
                       ${product.price}
                     </td>
                     <td className="px-6 py-5">

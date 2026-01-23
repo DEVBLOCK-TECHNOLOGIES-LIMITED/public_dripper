@@ -40,7 +40,7 @@ function Product({ product }) {
       {/* Footer Row */}
       <div className="flex flex-col w-full mt-3 relative z-10">
         <div className="flex items-baseline gap-2">
-          <span className="text-xl font-display font-bold text-champagne-100">
+          <span className="text-xl font-sans font-bold text-champagne-100">
             ${product.price}
           </span>
           <span className="text-xs text-champagne-500/50 line-through decoration-gold-500/30">

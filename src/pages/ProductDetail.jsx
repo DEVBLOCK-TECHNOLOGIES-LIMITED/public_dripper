@@ -104,7 +104,7 @@ function ProductDetail() {
                   Price
                 </span>
                 <div className="flex items-baseline gap-4">
-                  <span className="text-4xl font-display font-bold text-gold-400">
+                  <span className="text-4xl font-sans font-bold text-gold-400">
                     ${product.price}
                   </span>
                   <span className="text-lg text-champagne-500/50 line-through decoration-gold-500/30">
