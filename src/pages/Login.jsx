@@ -141,30 +141,6 @@ function Login() {
               theme="filled_black"
               shape="pill"
             />
-
-            <AppleLogin
-              clientId={process.env.REACT_APP_APPLE_CLIENT_ID}
-              redirectURI={process.env.REACT_APP_APPLE_REDIRECT_URI}
-              usePopup={true}
-              callback={(response) => {
-                if (!response.error) {
-                  dispatch(loginWithApple(response));
-                } else {
-                  toast.error("Apple Sign In Failed");
-                }
-              }}
-              scope="email name"
-              responseMode="query"
-              render={(renderProps) => (
-                <button
-                  onClick={renderProps.onClick}
-                  className="px-6 py-2.5 bg-black text-white rounded-full flex items-center gap-3 hover:bg-gray-900 transition-colors w-full sm:w-auto min-w-[200px] justify-center"
-                >
-                  <i className="fa fa-apple text-xl"></i>
-                  <span className="font-medium">Sign in with Apple</span>
-                </button>
-              )}
-            />
           </div>
         </div>
 
