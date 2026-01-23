@@ -8,6 +8,7 @@ import {
   HiOutlineCash,
   HiOutlineMenuAlt2,
   HiOutlineX,
+  HiOutlineTag,
 } from "react-icons/hi";
 
 const AdminLayout = ({ children }) => {
@@ -31,9 +32,13 @@ const AdminLayout = ({ children }) => {
       icon: <HiOutlineShoppingBag size={20} />,
     },
     {
-      title: "Users",
       path: "/admin/users",
       icon: <HiOutlineUsers size={20} />,
+    },
+    {
+      title: "Discounts",
+      path: "/admin/discounts",
+      icon: <HiOutlineTag size={20} />,
     },
   ];
 

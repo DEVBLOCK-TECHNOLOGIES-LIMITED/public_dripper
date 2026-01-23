@@ -24,6 +24,7 @@ import DashboardAdmin from "./superuser/admin/Admin";
 import ProductManagement from "./superuser/admin/ProductManagement";
 import OrderManagement from "./superuser/admin/OrderManagement";
 import UserManagement from "./superuser/admin/UserManagement";
+import Discounts from "./superuser/admin/Discounts";
 
 function App() {
   const email = useSelector((state) => state.auth.user?.data?.email);
@@ -62,6 +63,7 @@ function App() {
           <Route path="products" element={<ProductManagement />} />
           <Route path="orders" element={<OrderManagement />} />
           <Route path="users" element={<UserManagement />} />
+          <Route path="discounts" element={<Discounts />} />
         </Route>
       </Routes>
       <Footer />

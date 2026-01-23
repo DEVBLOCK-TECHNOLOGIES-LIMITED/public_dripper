@@ -16,6 +16,8 @@ import {
 } from "react-icons/ri";
 import { HiOutlineSparkles, HiArrowRight } from "react-icons/hi";
 import { getShippingFee } from "../features/shipping/shippingSlice";
+import axios from "axios";
+import uri from "../features/config";
 
 const CartModal = ({ cart }) => {
   return (
@@ -168,6 +170,32 @@ function Cart() {
   });
 
   const [gift, setGift] = useState(false);
+  const [discountCode, setDiscountCode] = useState("");
+  const [appliedDiscount, setAppliedDiscount] = useState(null);
+  const [discountLoading, setDiscountLoading] = useState(false);
+
+  const handleApplyDiscount = async () => {
+    if (!discountCode) return;
+    setDiscountLoading(true);
+    try {
+      const response = await axios.post(`${uri}/api/discounts/validate`, {
+        code: discountCode,
+      });
+      setAppliedDiscount(response.data.data);
+      toast.success("Discount applied!");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Invalid discount code");
+      setAppliedDiscount(null);
+    } finally {
+      setDiscountLoading(false);
+    }
+  };
+
+  const handleRemoveDiscount = () => {
+    setAppliedDiscount(null);
+    setDiscountCode("");
+    toast.info("Discount removed");
+  };
 
   // Form States were removed as they are no longer used in Cart
 
@@ -284,6 +312,23 @@ function Cart() {
                       .toLocaleString()}
                   </span>
                 </div>
+                {appliedDiscount && (
+                  <div className="flex justify-between text-gold-500 font-bold">
+                    <span>Discount ({appliedDiscount.code})</span>
+                    <span>
+                      - $
+                      {(appliedDiscount.type === "percent"
+                        ? (cartItems?.reduce(
+                            (acc, item) => acc + Number(item.price),
+                            0,
+                          ) *
+                            appliedDiscount.value) /
+                          100
+                        : appliedDiscount.value
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between text-champagne-300">
                   <span>Shipping</span>
                   <span
@@ -298,6 +343,37 @@ function Cart() {
                 </div>
               </div>
 
+              {/* Discount Input */}
+              <div className="mb-6">
+                {!appliedDiscount ? (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Promo Code"
+                      className="w-full p-3 bg-noir-900 border border-gold-500/20 rounded-xl text-champagne-100 placeholder:text-champagne-500/50 outline-none focus:border-gold-500 transition-all uppercase"
+                      value={discountCode}
+                      onChange={(e) =>
+                        setDiscountCode(e.target.value.toUpperCase())
+                      }
+                    />
+                    <button
+                      onClick={handleApplyDiscount}
+                      disabled={!discountCode || discountLoading}
+                      className="px-4 bg-gold-500/10 text-gold-500 border border-gold-500/20 rounded-xl hover:bg-gold-500 hover:text-noir-900 transition-all font-bold disabled:opacity-50"
+                    >
+                      {discountLoading ? <Loader size="sm" /> : "Apply"}
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleRemoveDiscount}
+                    className="w-full py-2 bg-rosegold-500/10 text-rosegold-500 border border-rosegold-500/20 rounded-xl hover:bg-rosegold-500 hover:text-white transition-all text-sm font-bold flex items-center justify-center gap-2"
+                  >
+                    <RiDeleteBinLine /> Remove Discount ({appliedDiscount.code})
+                  </button>
+                )}
+              </div>
+
               <div className="flex justify-between items-end mb-8">
                 <span className="text-champagne-400 text-sm">Total</span>
                 <span className="text-3xl font-display font-bold text-gold-400">
@@ -306,7 +382,18 @@ function Cart() {
                     cartItems?.reduce(
                       (acc, item) => acc + Number(item.price),
                       0,
-                    ) + (shipCost || 0)
+                    ) +
+                    (shipCost || 0) -
+                    (appliedDiscount
+                      ? appliedDiscount.type === "percent"
+                        ? (cartItems?.reduce(
+                            (acc, item) => acc + Number(item.price),
+                            0,
+                          ) *
+                            appliedDiscount.value) /
+                          100
+                        : appliedDiscount.value
+                      : 0)
                   ).toLocaleString()}
                 </span>
               </div>
