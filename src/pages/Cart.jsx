@@ -374,7 +374,7 @@ function Cart() {
               <div className="flex justify-between items-end mb-8">
                 <span className="text-champagne-400 text-sm">Total</span>
                 <span className="text-3xl font-opensans font-bold text-gold-400">
-                  $ $
+                  $
                   {formatPrice(
                     cartItems?.reduce(
                       (acc, item) => acc + Number(item.price),
