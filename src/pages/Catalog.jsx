@@ -1,11 +1,12 @@
+// ... keep existing imports
 import React, { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { BsFilterLeft, BsX } from "react-icons/bs";
-import { HiOutlineArrowRight } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../features/products/productSlice";
 import Product from "../components/Product";
 import ProductSkeleton from "../components/ProductSkeleton";
+import Pagination from "../components/Pagination"; // Import Pagination
 import { FaGem } from "react-icons/fa";
 
 function Catalog() {
@@ -15,7 +16,8 @@ function Catalog() {
 
   const [sortBy, setSortBy] = React.useState("title-ascending");
   const [activeCategory, setActiveCategory] = React.useState(initialCategory);
-  const [visibleProducts, setVisibleProducts] = React.useState(6);
+  const [currentPage, setCurrentPage] = React.useState(1); // Added currentPage
+  const [itemsPerPage] = React.useState(12); // Added itemsPerPage, fixed to 12
   const [isFilterOpen, setIsFilterOpen] = React.useState(false);
 
   const { products, isError, message, isLoading } = useSelector(
@@ -26,23 +28,10 @@ function Catalog() {
     return state.cart;
   });
 
-  const getItemsPerRow = () => {
-    if (typeof window !== "undefined") {
-      if (window.innerWidth >= 1024) return 3;
-      if (window.innerWidth >= 640) return 2;
-      return 2;
-    }
-    return 3;
-  };
-
-  const getInitialVisibleCount = () => {
-    return getItemsPerRow() * 4;
-  };
-
   useEffect(() => {
-    setVisibleProducts(getInitialVisibleCount());
-    // eslint-disable-next-line
-  }, []);
+    // Scroll to top on page change
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -93,6 +82,20 @@ function Catalog() {
 
     return items;
   }, [products?.data, sortBy, activeCategory]);
+
+  // Reset page when category or sort changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, sortBy]);
+
+  // Pagination Logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentProducts = filteredAndSortedProducts.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
+  const totalPages = Math.ceil(filteredAndSortedProducts.length / itemsPerPage);
 
   return (
     <div className="min-h-screen bg-noir-900 py-12 px-4">
@@ -182,16 +185,14 @@ function Catalog() {
               </>
             )}
             {isError && <span className="text-rosegold-500">{message}</span>}
-            {!isLoading && !isError && filteredAndSortedProducts.length > 0
-              ? filteredAndSortedProducts
-                  .slice(0, visibleProducts)
-                  .map((product) => (
-                    <Product
-                      key={product._id || product.id}
-                      product={product}
-                      cart={cart}
-                    />
-                  ))
+            {!isLoading && !isError && currentProducts.length > 0
+              ? currentProducts.map((product) => (
+                  <Product
+                    key={product._id || product.id}
+                    product={product}
+                    cart={cart}
+                  />
+                ))
               : !isLoading &&
                 !isError && (
                   <span className="text-lg text-champagne-400 text-center col-span-full">
@@ -206,22 +207,16 @@ function Catalog() {
                 )}
           </div>
 
-          {/* Load More Button */}
-          {!isLoading &&
-            !isError &&
-            filteredAndSortedProducts &&
-            visibleProducts < filteredAndSortedProducts.length && (
-              <div className="flex justify-center mt-12">
-                <button
-                  onClick={() =>
-                    setVisibleProducts(visibleProducts + getItemsPerRow() * 2)
-                  }
-                  className="px-10 py-4 bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 font-bold rounded-xl hover:from-gold-400 hover:to-gold-500 transition-all transform hover:-translate-y-1 shadow-lg shadow-gold-500/20 flex items-center justify-center gap-2"
-                >
-                  Discover More <HiOutlineArrowRight />
-                </button>
-              </div>
-            )}
+          {/* Pagination */}
+          {!isLoading && !isError && filteredAndSortedProducts.length > 0 && (
+            <div className="mt-12">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
         </div>
       </div>
 
