@@ -83,22 +83,6 @@ export const loginWithGoogle = createAsyncThunk(
   },
 );
 
-export const loginWithApple = createAsyncThunk(
-  "auth/loginWithApple",
-  async (data, thunkAPI) => {
-    try {
-      return await authService.appleLogin(data);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  },
-);
 export const updateUserProfile = createAsyncThunk(
   "auth/updateProfile",
   async ({ email, profileData }, thunkAPI) => {
@@ -232,19 +216,6 @@ const authSlice = createSlice({
         state.message = action.payload;
       })
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.user = action.payload;
-      })
-      .addCase(loginWithApple.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(loginWithApple.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
-      .addCase(loginWithApple.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;

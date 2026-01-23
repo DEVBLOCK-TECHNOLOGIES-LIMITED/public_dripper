@@ -94,16 +94,6 @@ const googleLogin = async (token) => {
   return response.data;
 };
 
-const appleLogin = async (data) => {
-  const response = await axios.post(`${uri}/api/user/apple`, data);
-
-  if (response.data) {
-    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
-  }
-
-  return response.data;
-};
-
 const authService = {
   regUser,
   loginUser,
@@ -114,7 +104,6 @@ const authService = {
   addCard,
   removeCard,
   googleLogin,
-  appleLogin,
 };
 
 export default authService;
