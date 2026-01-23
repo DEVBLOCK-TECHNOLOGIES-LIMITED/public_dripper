@@ -13,6 +13,7 @@ import { loadStripe } from "@stripe/stripe-js"; // [NEW]
 import { Elements } from "@stripe/react-stripe-js"; // [NEW]
 import StripePaymentForm from "../components/StripePaymentForm"; // [NEW]
 import axios from "axios"; // [NEW]
+import uri from "../features/config"; // [NEW]
 
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
@@ -130,13 +131,10 @@ function Checkout() {
     if (finalTotal > 0) {
       // Create PaymentIntent as soon as we have a valid total
       axios
-        .post(
-          `${process.env.REACT_APP_API_URL || "http://localhost:3001"}/api/create-payment-intent`,
-          {
-            amount: finalTotal,
-            currency: "usd",
-          },
-        )
+        .post(`${uri}/api/create-payment-intent`, {
+          amount: finalTotal,
+          currency: "usd",
+        })
         .then((res) => setClientSecret(res.data.clientSecret))
         .catch((err) => console.error("Error creating payment intent", err));
     }
