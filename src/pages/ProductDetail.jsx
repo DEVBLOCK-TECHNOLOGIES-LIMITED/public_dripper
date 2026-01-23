@@ -5,6 +5,7 @@ import { getProduct, reset } from "../features/products/productSlice";
 import { addToCart } from "../features/cart/cartSlice";
 import Loader from "../components/Loader";
 import { useToast } from "../context/ToastContext";
+import { formatPrice } from "../utils/formatPrice";
 import { HiArrowLeft, HiOutlineShoppingBag } from "react-icons/hi";
 
 function ProductDetail() {
@@ -109,16 +110,16 @@ function ProductDetail() {
                 </span>
                 <div className="flex items-baseline gap-4">
                   <span className="text-4xl font-sans font-bold text-gold-400">
-                    ${product.salePrice || product.price}
+                    ${formatPrice(product.salePrice || product.price)}
                   </span>
                   {product.salePrice && (
                     <span className="text-lg text-champagne-500/50 line-through decoration-gold-500/30">
-                      ${product.price}
+                      ${formatPrice(product.price)}
                     </span>
                   )}
                   {!product.salePrice && (
                     <span className="text-lg text-champagne-500/50 line-through decoration-gold-500/30">
-                      ${(product.price * 1.5).toFixed(2)}
+                      ${formatPrice(product.price * 1.5)}
                     </span>
                   )}
                 </div>

@@ -10,6 +10,7 @@ import {
   HiOutlineSearch,
 } from "react-icons/hi";
 import { useToast } from "../../context/ToastContext";
+import { formatPrice } from "../../utils/formatPrice";
 import { getProducts } from "../../features/products/productSlice";
 import Modal from "../../components/Modal";
 
@@ -186,10 +187,12 @@ const ProductManagement = () => {
                       </div>
                     </td>
                     <td className="px-6 py-5 font-sans font-black text-champagne-100">
-                      ${product.price}
+                      ${formatPrice(product.price)}
                     </td>
                     <td className="px-6 py-5 font-sans font-black text-gold-500">
-                      {product.salePrice ? `$${product.salePrice}` : "-"}
+                      {product.salePrice
+                        ? `$${formatPrice(product.salePrice)}`
+                        : "-"}
                     </td>
                     <td className="px-6 py-5">
                       <span className="px-3 py-1 bg-gold-500/10 text-gold-500 rounded-lg text-xs font-black uppercase tracking-wider border border-gold-500/20">

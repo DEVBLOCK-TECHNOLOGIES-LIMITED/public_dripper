@@ -23,6 +23,7 @@ import uri from "../features/config";
 
 import Loader from "../components/Loader";
 import { useToast } from "../context/ToastContext";
+import { formatPrice } from "../utils/formatPrice";
 import {
   HiOutlineLocationMarker,
   HiOutlineCreditCard,
@@ -484,7 +485,7 @@ function CheckoutForm({
                     {item.name}
                   </p>
                   <p className="text-gold-500 font-bold text-xs">
-                    ${item.price}
+                    ${formatPrice(item.price)}
                   </p>
                 </div>
               </div>
@@ -495,7 +496,7 @@ function CheckoutForm({
             <div className="flex justify-between text-champagne-400 text-sm">
               <span>Subtotal</span>
               <span className="font-bold text-champagne-100">
-                ${cartSubtotal.toFixed(2)}
+                ${formatPrice(cartSubtotal)}
               </span>
             </div>
 
@@ -507,7 +508,9 @@ function CheckoutForm({
                 </span>
               ) : (
                 <span className="text-champagne-100 font-bold">
-                  {shippingCost === 0 ? "FREE" : `$${shippingCost.toFixed(2)}`}
+                  {shippingCost === 0
+                    ? "FREE"
+                    : `$${formatPrice(shippingCost)}`}
                 </span>
               )}
             </div>
@@ -517,7 +520,7 @@ function CheckoutForm({
                   Total
                 </span>
                 <span className="text-2xl font-black font-opensans text-gold-500">
-                  ${finalTotal.toFixed(2)}
+                  ${formatPrice(finalTotal)}
                 </span>
               </div>
             </div>

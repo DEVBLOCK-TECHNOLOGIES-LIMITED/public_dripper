@@ -5,11 +5,13 @@ import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
 import { HiOutlinePlus, HiOutlineTrash, HiOutlineSearch } from "react-icons/hi";
 import { useToast } from "../../context/ToastContext";
+import { formatPrice } from "../../utils/formatPrice";
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
 
 const Discounts = () => {
   const { user } = useSelector((state) => state.auth);
+  const { toast } = useToast();
   const [discounts, setDiscounts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,7 +34,7 @@ const Discounts = () => {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [user, toast]);
 
   useEffect(() => {
     fetchDiscounts();
@@ -151,7 +153,7 @@ const Discounts = () => {
                       <td className="px-6 py-5 font-sans font-black text-champagne-100">
                         {discount.type === "percent"
                           ? `${discount.value}%`
-                          : `$${discount.value}`}
+                          : `$${formatPrice(discount.value)}`}
                       </td>
                       <td className="px-6 py-5">
                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

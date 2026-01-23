@@ -5,6 +5,7 @@ import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
 import { HiOutlineShieldCheck } from "react-icons/hi";
 import { useToast } from "../../context/ToastContext";
+import { formatPrice } from "../../utils/formatPrice";
 
 const UserManagement = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -93,7 +94,7 @@ const UserManagement = () => {
                     <td className="px-6 py-5">
                       <div className="flex flex-col">
                         <span className="font-black text-gray-700">
-                          {u.balance?.toLocaleString() || 0}
+                          {formatPrice(u.balance || 0)}
                         </span>
                         <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest">
                           Available

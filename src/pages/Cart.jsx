@@ -14,6 +14,7 @@ import { HiArrowRight } from "react-icons/hi";
 import { getShippingFee } from "../features/shipping/shippingSlice";
 import axios from "axios";
 import uri from "../features/config";
+import { formatPrice } from "../utils/formatPrice";
 
 const CartModal = ({ cart }) => {
   return (
@@ -122,7 +123,9 @@ const CartProduct = ({ product, cart }) => {
             <span>•</span>
             <span>Size {product.size || "STD"}</span>
           </div>
-          <span className="text-gold-400 font-bold mt-1">${product.price}</span>
+          <span className="text-gold-400 font-bold mt-1">
+            ${formatPrice(product.price)}
+          </span>
         </div>
       </div>
 
@@ -148,7 +151,7 @@ const CartProduct = ({ product, cart }) => {
         </div>
         <div className="flex justify-end items-center w-full">
           <span className="font-bold text-champagne-100 text-lg">
-            + ${product.price * quantity}
+            + ${formatPrice(product.price * quantity)}
           </span>
         </div>
       </div>
@@ -216,7 +219,7 @@ function Cart() {
       navigate("/login");
       return;
     }
-  }, [user, navigate]);
+  }, [user, navigate, toast]);
 
   useEffect(() => {
     // Only fetch shipping fee if there are items in the cart
@@ -297,9 +300,12 @@ function Cart() {
                   <span>Subtotal</span>
                   <span>
                     $
-                    {cartItems
-                      ?.reduce((acc, item) => acc + Number(item.price), 0)
-                      .toLocaleString()}
+                    {formatPrice(
+                      cartItems?.reduce(
+                        (acc, item) => acc + Number(item.price),
+                        0,
+                      ),
+                    )}
                   </span>
                 </div>
                 {appliedDiscount && (
@@ -307,15 +313,16 @@ function Cart() {
                     <span>Discount ({appliedDiscount.code})</span>
                     <span>
                       - $
-                      {(appliedDiscount.type === "percent"
-                        ? (cartItems?.reduce(
-                            (acc, item) => acc + Number(item.price),
-                            0,
-                          ) *
-                            appliedDiscount.value) /
-                          100
-                        : appliedDiscount.value
-                      ).toLocaleString()}
+                      {formatPrice(
+                        appliedDiscount.type === "percent"
+                          ? (cartItems?.reduce(
+                              (acc, item) => acc + Number(item.price),
+                              0,
+                            ) *
+                              appliedDiscount.value) /
+                              100
+                          : appliedDiscount.value,
+                      )}
                     </span>
                   </div>
                 )}
@@ -328,7 +335,7 @@ function Cart() {
                         : "text-champagne-100"
                     }
                   >
-                    ${shipCost || "0"}
+                    ${formatPrice(shipCost || 0)}
                   </span>
                 </div>
               </div>
@@ -367,24 +374,24 @@ function Cart() {
               <div className="flex justify-between items-end mb-8">
                 <span className="text-champagne-400 text-sm">Total</span>
                 <span className="text-3xl font-opensans font-bold text-gold-400">
-                  $
-                  {(
+                  $ $
+                  {formatPrice(
                     cartItems?.reduce(
                       (acc, item) => acc + Number(item.price),
                       0,
                     ) +
-                    (shipCost || 0) -
-                    (appliedDiscount
-                      ? appliedDiscount.type === "percent"
-                        ? (cartItems?.reduce(
-                            (acc, item) => acc + Number(item.price),
-                            0,
-                          ) *
-                            appliedDiscount.value) /
-                          100
-                        : appliedDiscount.value
-                      : 0)
-                  ).toLocaleString()}
+                      (shipCost || 0) -
+                      (appliedDiscount
+                        ? appliedDiscount.type === "percent"
+                          ? (cartItems?.reduce(
+                              (acc, item) => acc + Number(item.price),
+                              0,
+                            ) *
+                              appliedDiscount.value) /
+                            100
+                          : appliedDiscount.value
+                        : 0),
+                  )}
                 </span>
               </div>
 

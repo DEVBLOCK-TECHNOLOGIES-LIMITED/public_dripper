@@ -5,6 +5,7 @@ import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
 import { HiOutlineRefresh, HiOutlineEye } from "react-icons/hi";
 import { useToast } from "../../context/ToastContext";
+import { formatPrice } from "../../utils/formatPrice";
 
 const OrderManagement = () => {
   const { user } = useSelector((state) => state.auth);
@@ -112,7 +113,7 @@ const OrderManagement = () => {
                       </div>
                     </td>
                     <td className="px-6 py-5 font-black text-gray-700">
-                      ${order.total}
+                      ${formatPrice(order.total)}
                     </td>
                     <td className="px-6 py-5">
                       <span

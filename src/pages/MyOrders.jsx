@@ -9,6 +9,7 @@ import {
   HiChevronUp,
   HiPrinter,
 } from "react-icons/hi";
+import { formatPrice } from "../utils/formatPrice";
 
 function OrderItem({ order, user }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -101,7 +102,7 @@ function OrderItem({ order, user }) {
                       ${
                         order.paymentMethod === "Store Credits"
                           ? `${(item.price * 100).toLocaleString()} Credits`
-                          : `$${item.price}`
+                          : `$${formatPrice(item.price)}`
                       }
                     </td>
                   </tr>
@@ -117,7 +118,7 @@ function OrderItem({ order, user }) {
                 <span>${
                   order.paymentMethod === "Store Credits"
                     ? `${(order.total * 100).toLocaleString()} Credits`
-                    : `$${order.total.toFixed(2)}`
+                    : `$${formatPrice(order.total)}`
                 }</span>
               </div>
               <div class="total-row">
@@ -129,7 +130,7 @@ function OrderItem({ order, user }) {
                 <span>${
                   order.paymentMethod === "Store Credits"
                     ? `${(order.total * 100).toLocaleString()} Credits`
-                    : `$${order.total.toFixed(2)}`
+                    : `$${formatPrice(order.total)}`
                 }</span>
               </div>
             </div>
@@ -178,7 +179,7 @@ function OrderItem({ order, user }) {
             <p className="text-sm font-black text-champagne-100">
               {order.paymentMethod === "Store Credits"
                 ? `${(order.total * 100).toLocaleString()} Credits`
-                : `$${order.total.toFixed(2)}`}
+                : `$${formatPrice(order.total)}`}
             </p>
           </div>
 
@@ -264,7 +265,7 @@ function OrderItem({ order, user }) {
                       <p className="text-sm font-bold text-gold-400">
                         {order.paymentMethod === "Store Credits"
                           ? `${(item.price * 100).toLocaleString()} Credits`
-                          : `$${item.price}`}
+                          : `$${formatPrice(item.price)}`}
                       </p>
                     </div>
                   </div>
