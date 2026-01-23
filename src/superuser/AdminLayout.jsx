@@ -31,6 +31,7 @@ const AdminLayout = ({ children }) => {
       icon: <HiOutlineShoppingBag size={20} />,
     },
     {
+      title: "Users",
       path: "/admin/users",
       icon: <HiOutlineUsers size={20} />,
     },
