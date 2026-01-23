@@ -151,7 +151,7 @@ const CartProduct = ({ product, cart }) => {
         </div>
         <div className="flex justify-end items-center w-full">
           <span className="font-bold text-champagne-100 text-lg">
-            + ${formatPrice(product.price * quantity)}
+            +${formatPrice(product.price * quantity)}
           </span>
         </div>
       </div>
