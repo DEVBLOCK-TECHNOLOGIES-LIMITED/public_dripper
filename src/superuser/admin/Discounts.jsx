@@ -20,7 +20,7 @@ const Discounts = () => {
     value: "",
   });
 
-  const fetchDiscounts = async () => {
+  const fetchDiscounts = React.useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(`${uri}/api/admin/discounts`, {
@@ -32,11 +32,11 @@ const Discounts = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchDiscounts();
-  }, [user]);
+  }, [fetchDiscounts]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

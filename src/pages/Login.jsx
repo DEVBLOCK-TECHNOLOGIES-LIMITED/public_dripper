@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  login,
-  reset,
-  loginWithGoogle,
-  loginWithApple,
-} from "../features/auth/authSlice";
+import { login, reset, loginWithGoogle } from "../features/auth/authSlice";
 import { GoogleLogin } from "@react-oauth/google";
-import AppleLogin from "react-apple-signin-auth";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

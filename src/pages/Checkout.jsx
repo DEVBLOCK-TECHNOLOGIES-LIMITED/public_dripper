@@ -6,7 +6,7 @@ import {
   createOrder,
   reset as resetOrder,
 } from "../features/orders/orderSlice";
-import { addAddress, addCard } from "../features/auth/authSlice";
+import { addAddress } from "../features/auth/authSlice";
 import { getCart } from "../features/cart/cartSlice";
 import { getShippingFee } from "../features/shipping/shippingSlice";
 import { loadStripe } from "@stripe/stripe-js";
@@ -569,7 +569,6 @@ function Checkout() {
     zipCode: "",
     cardNumber: "",
     expiry: "",
-    cvv: "",
     cvv: "",
     cardName: "",
     phoneNumber: "",

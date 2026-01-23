@@ -5,7 +5,6 @@ import {
   HiOutlineCube,
   HiOutlineShoppingBag,
   HiOutlineUsers,
-  HiOutlineCash,
   HiOutlineMenuAlt2,
   HiOutlineX,
   HiOutlineTag,

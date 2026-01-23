@@ -1,11 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  HiCheckCircle,
-  HiChevronRight,
-  HiOutlineSparkles,
-} from "react-icons/hi";
-import { FaCoins } from "react-icons/fa";
+import { HiCheckCircle, HiChevronRight } from "react-icons/hi";
 
 function OrderSuccess() {
   return (

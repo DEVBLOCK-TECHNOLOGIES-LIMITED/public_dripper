@@ -8,7 +8,7 @@ import {
   HiOutlineShieldCheck,
   HiOutlineTruck,
 } from "react-icons/hi";
-import { FaCoins, FaGem } from "react-icons/fa";
+import { FaGem } from "react-icons/fa";
 
 function Dashboard() {
   return (

@@ -9,11 +9,7 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
-import {
-  RiDeleteBinLine,
-  RiErrorWarningLine,
-  RiErrorWarningLine,
-} from "react-icons/ri";
+import { RiDeleteBinLine } from "react-icons/ri";
 import { HiArrowRight } from "react-icons/hi";
 import { getShippingFee } from "../features/shipping/shippingSlice";
 import axios from "axios";
@@ -193,7 +189,6 @@ function Cart() {
   // Form States were removed as they are no longer used in Cart
 
   const { user } = useSelector((state) => state.auth);
-  const { isLoading } = useSelector((state) => state.cart);
   const cartItems = user?.data?.cart || [];
   const { shippingFee, isLoading: isShippingLoading } = useSelector(
     (state) => state.shippingFee,
