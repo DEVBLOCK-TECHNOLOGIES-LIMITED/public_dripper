@@ -45,7 +45,7 @@ function Register() {
     }
 
     dispatch(reset());
-  }, [message, isError, dispatch, user, navigate]);
+  }, [message, isError, dispatch, user, navigate, toast]);
 
   const onSubmit = (e) => {
     e.preventDefault();

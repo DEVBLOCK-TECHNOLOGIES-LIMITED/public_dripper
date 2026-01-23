@@ -19,6 +19,7 @@ function Login() {
   const { user, isError, message, isLoading } = useSelector((state) => {
     return state.auth;
   });
+  const { toast } = useToast();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function Login() {
     }
 
     dispatch(reset());
-  }, [message, isError, dispatch, user, navigate]);
+  }, [message, isError, dispatch, user, navigate, toast]);
 
   const onSubmit = (e) => {
     e.preventDefault();
