@@ -17,7 +17,7 @@ function Product({ product }) {
           </h3>
         </Link>
         <span className="px-2 py-0.5 bg-rosegold-500 rounded-lg text-white font-bold text-[10px] uppercase tracking-wide shrink-0 ml-2">
-          -50%
+          {product.salePrice ? `SALE` : `NEW`}
         </span>
       </div>
 
@@ -41,11 +41,13 @@ function Product({ product }) {
       <div className="flex flex-col w-full mt-3 relative z-10">
         <div className="flex items-baseline gap-2">
           <span className="text-xl font-sans font-bold text-champagne-100">
-            ${product.price}
+            ${product.salePrice || product.price}
           </span>
-          <span className="text-xs text-champagne-500/50 line-through decoration-gold-500/30">
-            ${(product.price * 2).toFixed(2)}
-          </span>
+          {product.salePrice && (
+            <span className="text-xs text-champagne-500/50 line-through decoration-gold-500/30">
+              ${product.price}
+            </span>
+          )}
         </div>
         <p className="text-[10px] text-gold-500/80 uppercase tracking-widest font-bold mt-1">
           In Stock

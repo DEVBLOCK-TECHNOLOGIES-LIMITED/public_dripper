@@ -25,6 +25,7 @@ const ProductManagement = () => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
+    salePrice: "",
     category: "",
     image: "",
     code: "", // Read-only for edit
@@ -39,7 +40,14 @@ const ProductManagement = () => {
   };
 
   const handleAdd = () => {
-    setFormData({ name: "", price: "", category: "", image: "", code: "" });
+    setFormData({
+      name: "",
+      price: "",
+      salePrice: "",
+      category: "",
+      image: "",
+      code: "",
+    });
     setIsEditing(false);
     setIsModalOpen(true);
   };
@@ -48,6 +56,7 @@ const ProductManagement = () => {
     setFormData({
       name: product.name,
       price: product.price,
+      salePrice: product.salePrice || "",
       category: product.category,
       image: product.image,
       code: product.code,
@@ -143,6 +152,7 @@ const ProductManagement = () => {
                 <tr className="bg-gold-500/10 text-gold-500 text-xs font-black tracking-[0.2em] uppercase border-b border-gold-500/10">
                   <th className="px-6 py-5">Product Info</th>
                   <th className="px-6 py-5">Price</th>
+                  <th className="px-6 py-5">Sale Price</th>
                   <th className="px-6 py-5">Category</th>
                   <th className="px-6 py-5">Code</th>
                   <th className="px-6 py-5 text-right">Actions</th>
@@ -176,6 +186,9 @@ const ProductManagement = () => {
                     </td>
                     <td className="px-6 py-5 font-sans font-black text-champagne-100">
                       ${product.price}
+                    </td>
+                    <td className="px-6 py-5 font-sans font-black text-gold-500">
+                      {product.salePrice ? `$${product.salePrice}` : "-"}
                     </td>
                     <td className="px-6 py-5">
                       <span className="px-3 py-1 bg-gold-500/10 text-gold-500 rounded-lg text-xs font-black uppercase tracking-wider border border-gold-500/20">
@@ -240,6 +253,31 @@ const ProductManagement = () => {
                 value={formData.price}
                 onChange={handleInputChange}
                 required
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
+                placeholder="0.00"
+              />
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
+                placeholder="0.00"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">
+                Sale Price ($){" "}
+                <span className="text-xs font-normal text-gray-500">
+                  (Optional)
+                </span>
+              </label>
+              <input
+                type="number"
+                name="salePrice"
+                value={formData.salePrice}
+                onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none"
                 placeholder="0.00"
               />

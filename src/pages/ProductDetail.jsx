@@ -35,7 +35,10 @@ function ProductDetail() {
 
     // Adding multiple times if quantity > 1 (Simple implementation for now)
     for (let i = 0; i < quantity; i++) {
-      dispatch(addToCart({ email: user.data.email, item: product }));
+      // Use logic to determine real price
+      const finalPrice = product.salePrice || product.price;
+      const productToAdd = { ...product, price: finalPrice };
+      dispatch(addToCart({ email: user.data.email, item: productToAdd }));
     }
     toast.success(`${product.name || product.title} added to cart!`);
   };
@@ -105,11 +108,18 @@ function ProductDetail() {
                 </span>
                 <div className="flex items-baseline gap-4">
                   <span className="text-4xl font-sans font-bold text-gold-400">
-                    ${product.price}
+                    ${product.salePrice || product.price}
                   </span>
-                  <span className="text-lg text-champagne-500/50 line-through decoration-gold-500/30">
-                    ${(product.price * 1.5).toFixed(2)}
-                  </span>
+                  {product.salePrice && (
+                    <span className="text-lg text-champagne-500/50 line-through decoration-gold-500/30">
+                      ${product.price}
+                    </span>
+                  )}
+                  {!product.salePrice && (
+                    <span className="text-lg text-champagne-500/50 line-through decoration-gold-500/30">
+                      ${(product.price * 1.5).toFixed(2)}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="text-right">

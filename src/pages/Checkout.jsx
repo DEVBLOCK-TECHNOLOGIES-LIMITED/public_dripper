@@ -17,6 +17,7 @@ import {
   useElements,
   ExpressCheckoutElement,
 } from "@stripe/react-stripe-js";
+import { CurrencySelectorElement } from "@stripe/react-stripe-js/checkout";
 import axios from "axios";
 import uri from "../features/config";
 
@@ -28,7 +29,16 @@ import {
   HiOutlineLockClosed,
   HiOutlineShieldCheck,
   HiCheckCircle,
+  HiCheckCircle,
 } from "react-icons/hi";
+
+const OrderSummary = () => {
+  return (
+    <div className="mb-4">
+      <CurrencySelectorElement />
+    </div>
+  );
+};
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
@@ -437,6 +447,7 @@ function CheckoutForm({
                 </span>
                 <div className="flex-grow border-t border-gold-500/20"></div>
               </div>
+              <OrderSummary />
               <PaymentElement
                 id="payment-element"
                 options={{ layout: "tabs" }}
