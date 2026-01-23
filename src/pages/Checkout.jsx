@@ -9,6 +9,10 @@ import {
 import { addAddress, addCard } from "../features/auth/authSlice";
 import { getCart } from "../features/cart/cartSlice";
 import { getShippingFee } from "../features/shipping/shippingSlice";
+import { loadStripe } from "@stripe/stripe-js"; // [NEW]
+import { Elements } from "@stripe/react-stripe-js"; // [NEW]
+import StripePaymentForm from "../components/StripePaymentForm"; // [NEW]
+import axios from "axios"; // [NEW]
 
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
@@ -21,6 +25,8 @@ import {
   HiCheckCircle,
   HiOutlineSparkles,
 } from "react-icons/hi";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY); // [NEW]
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -110,6 +116,58 @@ function Checkout() {
       setShippingCost(backendShippingFee.data.shippingFee);
     }
   }, [backendShippingFee]);
+
+  // [NEW] Stripe Logic
+  const [clientSecret, setClientSecret] = useState("");
+
+  const cartSubtotal =
+    cartItems?.reduce((total, item) => total + parseFloat(item.price), 0) || 0;
+
+  // Dynamic calculations including shipping cost
+  const finalTotal = cartSubtotal + shippingCost;
+
+  useEffect(() => {
+    if (finalTotal > 0) {
+      // Create PaymentIntent as soon as we have a valid total
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL || "http://localhost:3001"}/api/create-payment-intent`,
+          {
+            amount: finalTotal,
+            currency: "usd",
+          },
+        )
+        .then((res) => setClientSecret(res.data.clientSecret))
+        .catch((err) => console.error("Error creating payment intent", err));
+    }
+  }, [finalTotal]);
+
+  const handleStripeSuccess = async (paymentIntent) => {
+    // Replicate onSubmit logic but using the confirmed payment
+    const shippingAddress = getShippingAddress();
+    const orderData = {
+      email: user.data.email,
+      items: cartItems,
+      total: finalTotal,
+      shippingAddress,
+      paymentMethod: "Stripe", // updated
+      paymentIntentId: paymentIntent.id,
+    };
+
+    const idempotencyKey = generateUUID();
+
+    // Save address if needed
+    if (selectedAddressIndex === -1 && saveAddress) {
+      dispatch(
+        addAddress({
+          email: user.data.email,
+          address: shippingAddress,
+        }),
+      );
+    }
+
+    dispatch(createOrder({ orderData, idempotencyKey }));
+  };
 
   const onChange = (e) => {
     setFormData((prev) => ({
@@ -203,12 +261,6 @@ function Checkout() {
 
     dispatch(createOrder({ orderData, idempotencyKey }));
   };
-
-  const cartSubtotal =
-    cartItems?.reduce((total, item) => total + parseFloat(item.price), 0) || 0;
-
-  // Dynamic calculations including shipping cost
-  const finalTotal = cartSubtotal + shippingCost;
 
   return (
     <div className="min-h-screen bg-noir-900 py-12 px-4 selection:bg-gold-500/30">
@@ -432,90 +484,23 @@ function Checkout() {
                 </div>
               )}
 
+              {/* Payment Section - Replaced with Stripe */}
               {selectedCardIndex === -1 && (
                 <div className="space-y-6 animate-fade-in-up">
-                  <div className="relative">
-                    <label className="text-xs font-black uppercase text-gold-500/70 tracking-widest mb-2 block">
-                      Name on Card
-                    </label>
-                    <input
-                      required={selectedCardIndex === -1}
-                      type="text"
-                      name="cardName"
-                      value={formData.cardName}
-                      onChange={onChange}
-                      placeholder="e.g. John Doe"
-                      className="w-full px-5 py-4 bg-noir-900/50 border border-gold-500/20 rounded-2xl focus:border-gold-500 focus:ring-1 focus:ring-gold-500/50 transition-all outline-none text-sm font-medium text-champagne-100 placeholder:text-champagne-500/50"
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <label className="text-xs font-black uppercase text-gold-500/70 tracking-widest mb-2 block">
-                      Card Number
-                    </label>
-                    <div className="relative">
-                      <input
-                        required={selectedCardIndex === -1}
-                        type="text"
-                        name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={onChange}
-                        placeholder="0000 0000 0000 0000"
-                        className="w-full px-5 py-4 bg-noir-900/50 border border-gold-500/20 rounded-2xl focus:border-gold-500 focus:ring-1 focus:ring-gold-500/50 transition-all outline-none text-sm font-medium text-champagne-100 placeholder:text-champagne-500/50 pr-14"
-                      />
-                      <HiOutlineCreditCard className="absolute right-5 top-1/2 -translate-y-1/2 text-2xl text-gold-500/50" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="relative">
-                      <label className="text-xs font-black uppercase text-gold-500/70 tracking-widest mb-2 block">
-                        Expiration
-                      </label>
-                      <div className="relative">
-                        <input
-                          required={selectedCardIndex === -1}
-                          type="text"
-                          name="expiry"
-                          value={formData.expiry}
-                          onChange={onChange}
-                          placeholder="MM/YY"
-                          className="w-full px-5 py-4 bg-noir-900/50 border border-gold-500/20 rounded-2xl focus:border-gold-500 focus:ring-1 focus:ring-gold-500/50 transition-all outline-none text-sm font-medium text-champagne-100 placeholder:text-champagne-500/50 pr-12"
-                        />
-                        <HiOutlineCalendar className="absolute right-5 top-1/2 -translate-y-1/2 text-xl text-gold-500/50" />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-xs font-black uppercase text-gold-500/70 tracking-widest mb-2 block">
-                        CVV
-                      </label>
-                      <input
-                        required={selectedCardIndex === -1}
-                        type="password"
-                        name="cvv"
-                        value={formData.cvv}
-                        onChange={onChange}
-                        placeholder="***"
-                        className="w-full px-5 py-4 bg-noir-900/50 border border-gold-500/20 rounded-2xl focus:border-gold-500 focus:ring-1 focus:ring-gold-500/50 transition-all outline-none text-sm font-medium text-champagne-100 placeholder:text-champagne-500/50"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 pt-4">
-                    <input
-                      type="checkbox"
-                      id="saveCard"
-                      checked={saveCard}
-                      onChange={(e) => setSaveCard(e.target.checked)}
-                      className="w-5 h-5 accent-gold-500 rounded-lg cursor-pointer bg-noir-900 border-gold-500/30"
-                    />
-                    <label
-                      htmlFor="saveCard"
-                      className="text-sm font-bold text-champagne-300 cursor-pointer"
+                  {clientSecret && (
+                    <Elements
+                      options={{
+                        clientSecret,
+                        appearance: { theme: "night", labels: "floating" },
+                      }}
+                      stripe={stripePromise}
                     >
-                      Save this card for later
-                    </label>
-                  </div>
+                      <StripePaymentForm
+                        amount={finalTotal}
+                        onSuccess={handleStripeSuccess}
+                      />
+                    </Elements>
+                  )}
                 </div>
               )}
             </div>
@@ -582,24 +567,30 @@ function Checkout() {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 py-5 rounded-2xl font-black mt-10 hover:from-gold-400 hover:to-gold-500 transition-all transform active:scale-[0.98] flex items-center justify-center gap-3 shadow-lg shadow-gold-500/20 disabled:opacity-50"
-              >
-                {isLoading ? (
-                  <Loader size="sm" />
-                ) : (
-                  <>
-                    Complete Purchase{" "}
-                    <HiOutlineLockClosed className="text-xl" />
-                  </>
-                )}
-              </button>
+              {/* Only show default submit button if NOT using Stripe (e.g. using saved card) */}
+              {selectedCardIndex !== -1 && (
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 py-5 rounded-2xl font-black mt-10 hover:from-gold-400 hover:to-gold-500 transition-all transform active:scale-[0.98] flex items-center justify-center gap-3 shadow-lg shadow-gold-500/20 disabled:opacity-50"
+                >
+                  {isLoading ? (
+                    <Loader size="sm" />
+                  ) : (
+                    <>
+                      Complete Purchase{" "}
+                      <HiOutlineLockClosed className="text-xl" />
+                    </>
+                  )}
+                </button>
+              )}
 
-              <p className="text-[10px] text-champagne-500/50 text-center mt-6 selection:bg-none">
-                By completing your purchase you agree to our Terms of Service.
-              </p>
+              {selectedCardIndex === -1 && (
+                <p className="text-center text-champagne-400 mt-6 text-sm">
+                  Please enter your card details in the Payment section above to
+                  complete your purchase.
+                </p>
+              )}
             </div>
           </div>
         </form>
