@@ -221,23 +221,6 @@ function Cart() {
     }
   }, [user, navigate, toast]);
 
-  useEffect(() => {
-    // Only fetch shipping fee if there are items in the cart
-    if (cartItems.length > 0) {
-      // Use the first saved address state if available, otherwise default to a reasonable fallback
-      const destinationState =
-        user?.data?.addresses?.[0]?.state || user?.data?.state || "lagos";
-
-      dispatch(
-        getShippingFee({
-          originState: "ogun",
-          destinationState: destinationState,
-          itemsCount: cartItems.length,
-        }),
-      );
-    }
-  }, [cartItems.length, dispatch, user?.data?.addresses, user?.data?.state]);
-
   return (
     <div className="min-h-screen bg-noir-900 py-12 px-4">
       <div className="w-full max-w-7xl mx-auto flex flex-col gap-8">
@@ -325,18 +308,6 @@ function Cart() {
                     </span>
                   </div>
                 )}
-                <div className="flex justify-between text-champagne-300">
-                  <span>Shipping</span>
-                  <span
-                    className={
-                      isShippingLoading
-                        ? "text-gold-500 animate-pulse"
-                        : "text-champagne-100"
-                    }
-                  >
-                    {formatPrice(shipCost || 0)}
-                  </span>
-                </div>
               </div>
 
               {/* Discount Input */}
