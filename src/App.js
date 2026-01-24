@@ -68,7 +68,6 @@ function App() {
         </Route>
       </Routes>
       <Footer />
-      <FloatButton />
     </ToastProvider>
   );
 }
