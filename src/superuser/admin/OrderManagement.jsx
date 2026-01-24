@@ -167,9 +167,9 @@ const OrderManagement = () => {
                             }
                             className="bg-noir-900 border border-gold-500/20 text-xs font-bold rounded-lg px-3 py-2 outline-none text-champagne-200 focus:ring-1 focus:ring-gold-500 cursor-pointer"
                           >
-                            <option value="Processing">Process</option>
-                            <option value="Shipped">Ship</option>
-                            <option value="Delivered">Deliver</option>
+                            <option value="pending">Process</option>
+                            <option value="shipped">Ship</option>
+                            <option value="delivered">Deliver</option>
                           </select>
                           <button
                             onClick={() => setSelectedOrder(order)}
