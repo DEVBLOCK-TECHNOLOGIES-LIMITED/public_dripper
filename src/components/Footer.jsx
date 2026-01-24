@@ -105,9 +105,6 @@ const Footer = () => {
                 >
                   Contact Us
                 </Link>
-                <span className="text-champagne-300 font-bold cursor-pointer hover:text-gold-500 transition-all hover:translate-x-1">
-                  Authentication
-                </span>
               </div>
             </div>
 
