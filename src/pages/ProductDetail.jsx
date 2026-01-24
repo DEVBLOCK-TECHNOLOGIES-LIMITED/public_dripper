@@ -131,16 +131,23 @@ function ProductDetail() {
               </div>
             </div>
 
-            <div className="mb-10">
-              <h3 className="text-xs font-bold text-gold-500 uppercase tracking-widest mb-4">
-                Craftsmanship Details
-              </h3>
-              <p className="text-champagne-300/80 leading-relaxed font-light text-lg">
-                Experience excellence with our {product.name}. Designed for
-                style and performance, this piece features high-quality
-                materials and a sleek finish. Verified by our expert team for
-                100% authenticity.
-              </p>
+            <div className="mb-10 space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="text-gold-500 text-lg">✔</span>
+                <p className="text-champagne-200 font-medium">
+                  100% Authentic – verified before dispatch
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-gold-500 text-lg">✔</span>
+                <p className="text-champagne-200 font-medium">UK Shipped</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-gold-500 text-lg">✔</span>
+                <p className="text-champagne-200 font-medium">
+                  Limited Availability
+                </p>
+              </div>
             </div>
 
             <div className="flex flex-col gap-6 mt-auto">
