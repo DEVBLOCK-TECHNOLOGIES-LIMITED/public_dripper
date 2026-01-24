@@ -19,6 +19,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import MyOrders from "./pages/MyOrders";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 import AdminRoute from "./superuser/AdminRoute";
 import DashboardAdmin from "./superuser/admin/Admin";
@@ -55,6 +56,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         <Route path="/cart" element={<CartMock />} />
 

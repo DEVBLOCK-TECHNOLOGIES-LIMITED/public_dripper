@@ -149,9 +149,12 @@ const Footer = () => {
               © 2026 PublicDripper. All rights reserved.
             </p>
             <div className="flex gap-8 text-[10px] font-black text-champagne-500 uppercase tracking-[0.2em]">
-              <span className="cursor-pointer hover:text-gold-500 transition-colors">
+              <Link
+                to="/privacy-policy"
+                className="cursor-pointer hover:text-gold-500 transition-colors"
+              >
                 Privacy Policy
-              </span>
+              </Link>
               <span className="cursor-pointer hover:text-gold-500 transition-colors">
                 Terms of Service
               </span>
