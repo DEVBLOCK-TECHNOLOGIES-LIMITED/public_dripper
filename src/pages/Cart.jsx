@@ -124,7 +124,7 @@ const CartProduct = ({ product, cart }) => {
             <span>Size {product.size || "STD"}</span>
           </div>
           <span className="text-gold-400 font-bold mt-1">
-            ${formatPrice(product.price)}
+            {formatPrice(product.price)}
           </span>
         </div>
       </div>
@@ -151,7 +151,7 @@ const CartProduct = ({ product, cart }) => {
         </div>
         <div className="flex justify-end items-center w-full">
           <span className="font-bold text-champagne-100 text-lg">
-            +${formatPrice(product.price * quantity)}
+            +{formatPrice(product.price * quantity)}
           </span>
         </div>
       </div>
@@ -299,7 +299,6 @@ function Cart() {
                 <div className="flex justify-between text-champagne-300">
                   <span>Subtotal</span>
                   <span>
-                    $
                     {formatPrice(
                       cartItems?.reduce(
                         (acc, item) => acc + Number(item.price),
@@ -312,7 +311,7 @@ function Cart() {
                   <div className="flex justify-between text-gold-500 font-bold">
                     <span>Discount ({appliedDiscount.code})</span>
                     <span>
-                      - $
+                      -
                       {formatPrice(
                         appliedDiscount.type === "percent"
                           ? (cartItems?.reduce(
@@ -335,7 +334,7 @@ function Cart() {
                         : "text-champagne-100"
                     }
                   >
-                    ${formatPrice(shipCost || 0)}
+                    {formatPrice(shipCost || 0)}
                   </span>
                 </div>
               </div>
@@ -374,7 +373,6 @@ function Cart() {
               <div className="flex justify-between items-end mb-8">
                 <span className="text-champagne-400 text-sm">Total</span>
                 <span className="text-3xl font-opensans font-bold text-gold-400">
-                  $
                   {formatPrice(
                     cartItems?.reduce(
                       (acc, item) => acc + Number(item.price),

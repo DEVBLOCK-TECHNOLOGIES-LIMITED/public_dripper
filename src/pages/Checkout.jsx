@@ -485,7 +485,7 @@ function CheckoutForm({
                     {item.name}
                   </p>
                   <p className="text-gold-500 font-bold text-xs">
-                    ${formatPrice(item.price)}
+                    {formatPrice(item.price)}
                   </p>
                 </div>
               </div>
@@ -496,7 +496,7 @@ function CheckoutForm({
             <div className="flex justify-between text-champagne-400 text-sm">
               <span>Subtotal</span>
               <span className="font-bold text-champagne-100">
-                ${formatPrice(cartSubtotal)}
+                {formatPrice(cartSubtotal)}
               </span>
             </div>
 
@@ -508,9 +508,7 @@ function CheckoutForm({
                 </span>
               ) : (
                 <span className="text-champagne-100 font-bold">
-                  {shippingCost === 0
-                    ? "FREE"
-                    : `$${formatPrice(shippingCost)}`}
+                  {shippingCost === 0 ? "FREE" : formatPrice(shippingCost)}
                 </span>
               )}
             </div>
@@ -520,7 +518,7 @@ function CheckoutForm({
                   Total
                 </span>
                 <span className="text-2xl font-black font-opensans text-gold-500">
-                  ${formatPrice(finalTotal)}
+                  {formatPrice(finalTotal)}
                 </span>
               </div>
             </div>
@@ -658,7 +656,7 @@ function Checkout() {
     if (finalTotal > 0) {
       const payload = {
         amount: finalTotal,
-        currency: "usd",
+        currency: "gbp",
         email: user?.data?.email,
         saveCard: saveCard, // User wants to save this new card
       };

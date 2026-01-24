@@ -102,7 +102,7 @@ function OrderItem({ order, user }) {
                       ${
                         order.paymentMethod === "Store Credits"
                           ? `${(item.price * 100).toLocaleString()} Credits`
-                          : `$${formatPrice(item.price)}`
+                          : formatPrice(item.price)
                       }
                     </td>
                   </tr>
@@ -118,7 +118,7 @@ function OrderItem({ order, user }) {
                 <span>${
                   order.paymentMethod === "Store Credits"
                     ? `${(order.total * 100).toLocaleString()} Credits`
-                    : `$${formatPrice(order.total)}`
+                    : formatPrice(order.total)
                 }</span>
               </div>
               <div class="total-row">
@@ -130,7 +130,7 @@ function OrderItem({ order, user }) {
                 <span>${
                   order.paymentMethod === "Store Credits"
                     ? `${(order.total * 100).toLocaleString()} Credits`
-                    : `$${formatPrice(order.total)}`
+                    : formatPrice(order.total)
                 }</span>
               </div>
             </div>
@@ -179,7 +179,7 @@ function OrderItem({ order, user }) {
             <p className="text-sm font-black text-champagne-100">
               {order.paymentMethod === "Store Credits"
                 ? `${(order.total * 100).toLocaleString()} Credits`
-                : `$${formatPrice(order.total)}`}
+                : formatPrice(order.total)}
             </p>
           </div>
 
@@ -265,7 +265,7 @@ function OrderItem({ order, user }) {
                       <p className="text-sm font-bold text-gold-400">
                         {order.paymentMethod === "Store Credits"
                           ? `${(item.price * 100).toLocaleString()} Credits`
-                          : `$${formatPrice(item.price)}`}
+                          : formatPrice(item.price)}
                       </p>
                     </div>
                   </div>

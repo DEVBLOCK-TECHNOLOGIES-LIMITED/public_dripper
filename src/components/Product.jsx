@@ -42,11 +42,11 @@ function Product({ product }) {
       <div className="flex flex-col w-full mt-3 relative z-10">
         <div className="flex items-baseline gap-2">
           <span className="text-xl font-sans font-bold text-champagne-100">
-            ${formatPrice(product.salePrice || product.price)}
+            {formatPrice(product.salePrice || product.price)}
           </span>
           {product.salePrice && (
             <span className="text-xs text-champagne-500/50 line-through decoration-gold-500/30">
-              ${formatPrice(product.price)}
+              {formatPrice(product.price)}
             </span>
           )}
         </div>

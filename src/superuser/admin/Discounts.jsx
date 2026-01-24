@@ -153,7 +153,7 @@ const Discounts = () => {
                       <td className="px-6 py-5 font-sans font-black text-champagne-100">
                         {discount.type === "percent"
                           ? `${discount.value}%`
-                          : `$${formatPrice(discount.value)}`}
+                          : formatPrice(discount.value)}
                       </td>
                       <td className="px-6 py-5">
                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -218,7 +218,7 @@ const Discounts = () => {
                 className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gold-500 outline-none bg-white"
               >
                 <option value="percent">Percentage (%)</option>
-                <option value="fixed">Fixed Amount ($)</option>
+                <option value="fixed">Fixed Amount (£)</option>
               </select>
             </div>
             <div>

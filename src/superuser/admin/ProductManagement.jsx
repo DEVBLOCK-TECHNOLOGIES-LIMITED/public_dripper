@@ -187,12 +187,10 @@ const ProductManagement = () => {
                       </div>
                     </td>
                     <td className="px-6 py-5 font-sans font-black text-champagne-100">
-                      ${formatPrice(product.price)}
+                      {formatPrice(product.price)}
                     </td>
                     <td className="px-6 py-5 font-sans font-black text-gold-500">
-                      {product.salePrice
-                        ? `$${formatPrice(product.salePrice)}`
-                        : "-"}
+                      {product.salePrice ? formatPrice(product.salePrice) : "-"}
                     </td>
                     <td className="px-6 py-5">
                       <span className="px-3 py-1 bg-gold-500/10 text-gold-500 rounded-lg text-xs font-black uppercase tracking-wider border border-gold-500/20">
@@ -249,7 +247,7 @@ const ProductManagement = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-1">
-                Price ($)
+                Price (£)
               </label>
               <input
                 type="number"
@@ -263,7 +261,7 @@ const ProductManagement = () => {
             </div>
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-1">
-                Sale Price ($){" "}
+                Sale Price (£){" "}
                 <span className="text-xs font-normal text-gray-500">
                   (Optional)
                 </span>

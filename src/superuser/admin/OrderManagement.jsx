@@ -113,7 +113,7 @@ const OrderManagement = () => {
                       </div>
                     </td>
                     <td className="px-6 py-5 font-black text-gray-700">
-                      ${formatPrice(order.total)}
+                      {formatPrice(order.total)}
                     </td>
                     <td className="px-6 py-5">
                       <span

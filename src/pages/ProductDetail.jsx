@@ -110,16 +110,16 @@ function ProductDetail() {
                 </span>
                 <div className="flex items-baseline gap-4">
                   <span className="text-4xl font-sans font-bold text-gold-400">
-                    ${formatPrice(product.salePrice || product.price)}
+                    {formatPrice(product.salePrice || product.price)}
                   </span>
                   {product.salePrice && (
                     <span className="text-lg text-champagne-500/50 line-through decoration-gold-500/30">
-                      ${formatPrice(product.price)}
+                      {formatPrice(product.price)}
                     </span>
                   )}
                   {!product.salePrice && (
                     <span className="text-lg text-champagne-500/50 line-through decoration-gold-500/30">
-                      ${formatPrice(product.price * 1.5)}
+                      {formatPrice(product.price * 1.5)}
                     </span>
                   )}
                 </div>
