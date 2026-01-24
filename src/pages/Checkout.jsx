@@ -30,7 +30,26 @@ import {
   HiOutlineLockClosed,
   HiOutlineShieldCheck,
   HiCheckCircle,
+  HiOutlineTruck,
 } from "react-icons/hi";
+
+// Delivery options configuration
+const DELIVERY_OPTIONS = [
+  {
+    id: "standard",
+    name: "Standard Delivery",
+    description: "5 working days from purchase date",
+    price: 0,
+    icon: "📦",
+  },
+  {
+    id: "premium",
+    name: "Premium Delivery",
+    description: "1-3 working days",
+    price: 10,
+    icon: "🚀",
+  },
+];
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
@@ -49,6 +68,9 @@ function CheckoutForm({
   cartItems,
   cartSubtotal,
   shippingCost,
+  deliveryOption,
+  setDeliveryOption,
+  deliveryFee,
   finalTotal,
   isShippingLoading,
   isLoadingOrder,
@@ -351,11 +373,59 @@ function CheckoutForm({
           )}
         </div>
 
-        {/* Step 2: Payment */}
-        <div className="bg-noir-800/50 p-8 rounded-3xl border border-gold-500/10 shadow-lg backdrop-blur-sm animate-fade-in-up delay-[200ms]">
+        {/* Step 2: Delivery Options */}
+        <div className="bg-noir-800/50 p-8 rounded-3xl border border-gold-500/10 shadow-lg backdrop-blur-sm animate-fade-in-up delay-[100ms]">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-10 h-10 bg-gold-500 text-noir-900 rounded-xl flex items-center justify-center font-bold shadow-lg shadow-gold-500/20">
               2
+            </div>
+            <h2 className="font-display text-xl font-bold flex items-center gap-2 text-champagne-100">
+              <HiOutlineTruck className="text-gold-500" /> Delivery Options
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            {DELIVERY_OPTIONS.map((option) => (
+              <div
+                key={option.id}
+                onClick={() => setDeliveryOption(option.id)}
+                className={`p-5 rounded-2xl border cursor-pointer flex items-center justify-between transition-all ${
+                  deliveryOption === option.id
+                    ? "border-gold-500 bg-gold-500/10 shadow-[0_0_15px_rgba(234,179,8,0.1)]"
+                    : "border-gold-500/20 hover:border-gold-500/50 bg-noir-900/50"
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-2xl">{option.icon}</span>
+                  <div>
+                    <p className="font-bold text-champagne-100">
+                      {option.name}
+                    </p>
+                    <p className="text-xs text-champagne-400">
+                      {option.description}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`font-bold ${option.price === 0 ? "text-green-400" : "text-gold-500"}`}
+                  >
+                    {option.price === 0 ? "FREE" : formatPrice(option.price)}
+                  </span>
+                  {deliveryOption === option.id && (
+                    <HiCheckCircle className="text-2xl text-gold-500" />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Step 3: Payment */}
+        <div className="bg-noir-800/50 p-8 rounded-3xl border border-gold-500/10 shadow-lg backdrop-blur-sm animate-fade-in-up delay-[200ms]">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-10 h-10 bg-gold-500 text-noir-900 rounded-xl flex items-center justify-center font-bold shadow-lg shadow-gold-500/20">
+              3
             </div>
             <h2 className="font-display text-xl font-bold flex items-center gap-2 text-champagne-100">
               <HiOutlineCreditCard className="text-gold-500" /> Payment Method
@@ -498,6 +568,19 @@ function CheckoutForm({
                 </span>
               )}
             </div>
+
+            <div className="flex justify-between text-champagne-400 text-sm">
+              <span>
+                Delivery (
+                {DELIVERY_OPTIONS.find((o) => o.id === deliveryOption)?.name})
+              </span>
+              <span
+                className={`font-bold ${deliveryFee === 0 ? "text-green-400" : "text-champagne-100"}`}
+              >
+                {deliveryFee === 0 ? "FREE" : formatPrice(deliveryFee)}
+              </span>
+            </div>
+
             <div className="flex items-center justify-between gap-4 pt-6 border-t border-gold-500/10 mt-4">
               <div className="flex flex-col">
                 <span className="text-2xl font-display font-bold text-champagne-100">
@@ -560,6 +643,7 @@ function Checkout() {
   const [saveCard, setSaveCard] = useState(false);
   const [shippingCost, setShippingCost] = useState(0);
   const [clientSecret, setClientSecret] = useState("");
+  const [deliveryOption, setDeliveryOption] = useState("standard"); // 'standard' or 'premium'
   // [NEW] Stripe Saved Cards State
   const [stripeCards, setStripeCards] = useState([]);
   const [selectedStripeCard, setSelectedStripeCard] = useState(null); // ID of selected Stripe card
@@ -635,7 +719,11 @@ function Checkout() {
 
   const cartSubtotal =
     cartItems?.reduce((total, item) => total + parseFloat(item.price), 0) || 0;
-  const finalTotal = cartSubtotal + shippingCost;
+
+  // Calculate delivery fee based on selected option
+  const deliveryFee =
+    DELIVERY_OPTIONS.find((o) => o.id === deliveryOption)?.price || 0;
+  const finalTotal = cartSubtotal + shippingCost + deliveryFee;
 
   // -- Stripe Intent Fetching --
   useEffect(() => {
@@ -724,6 +812,9 @@ function Checkout() {
               cartItems={cartItems}
               cartSubtotal={cartSubtotal}
               shippingCost={shippingCost}
+              deliveryOption={deliveryOption}
+              setDeliveryOption={setDeliveryOption}
+              deliveryFee={deliveryFee}
               finalTotal={finalTotal}
               isShippingLoading={isShippingLoading}
               isLoadingOrder={isLoading}
