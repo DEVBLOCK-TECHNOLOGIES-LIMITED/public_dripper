@@ -98,15 +98,6 @@ function CheckoutForm({
       const card = stripeCards.find((c) => c.id === selectedStripeCard);
       return card ? `Saved Card (** ${card.last4})` : "Saved Card";
     }
-    if (
-      selectedCardIndex !== -1 &&
-      user?.data?.paymentMethods?.[selectedCardIndex]
-    ) {
-      const card = user.data.paymentMethods[selectedCardIndex];
-      return `Saved Card: ${card.name} ending in ${
-        card.last4 || card.number.slice(-4)
-      }`;
-    }
     return "Stripe";
   };
 
@@ -121,64 +112,59 @@ function CheckoutForm({
     const idempotencyKey = generateUUID();
     let paymentIntentId = null;
 
-    // --- STRIPE LOGIC (New Card or Saved Card) ---
-    // If using simulated legacy card, skipping stripe logic.
-    if (selectedCardIndex === -1) {
-      if (!stripe || !elements) return; // Stripe not loaded
-
-      setIsProcessing(true);
-
-      let paymentIntentObj = null;
-
-      // Logic for Saved Card (possibly already confirmed on backend) vs New Card
-      // We retrieve the intent status first.
-
-      const { paymentIntent: retrievedIntent, error: retrieveError } =
-        await stripe.retrievePaymentIntent(clientSecret);
-
-      if (retrieveError) {
-        toast.error(retrieveError.message);
-        setIsProcessing(false);
-        return;
-      }
-
-      if (retrievedIntent.status === "succeeded") {
-        // Already done!
-        paymentIntentObj = retrievedIntent;
-      } else {
-        // Needs confirmation (New Card OR Saved Card requiring 3DS)
-        // If Saved Card and status is 'requires_action', confirmPayment works.
-        // If New Card (requires_payment_method), confirmPayment collects payload.
-
-        const { error, paymentIntent } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: `${window.location.origin}/order-success`,
-          },
-          redirect: "if_required",
-        });
-
-        if (error) {
-          toast.error(error.message);
-          setIsProcessing(false);
-          return;
-        }
-        paymentIntentObj = paymentIntent;
-      }
-
-      if (paymentIntentObj && paymentIntentObj.status === "succeeded") {
-        paymentIntentId = paymentIntentObj.id;
-      } else {
-        toast.error(
-          "Payment not completed. Status: " +
-            (paymentIntentObj?.status || "unknown"),
-        );
-        setIsProcessing(false);
-        return;
-      }
+    // --- STRIPE PAYMENT REQUIRED ---
+    if (!stripe || !elements) {
+      toast.error("Payment system not loaded. Please refresh the page.");
+      return;
     }
 
-    // --- SAVE DATA (Address/Card) ---
+    setIsProcessing(true);
+
+    let paymentIntentObj = null;
+
+    // Retrieve intent status first
+    const { paymentIntent: retrievedIntent, error: retrieveError } =
+      await stripe.retrievePaymentIntent(clientSecret);
+
+    if (retrieveError) {
+      toast.error(retrieveError.message);
+      setIsProcessing(false);
+      return;
+    }
+
+    if (retrievedIntent.status === "succeeded") {
+      // Already done (rare scenario)
+      paymentIntentObj = retrievedIntent;
+    } else {
+      // Needs confirmation (New Card OR Saved Card requiring 3DS)
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/order-success`,
+        },
+        redirect: "if_required",
+      });
+
+      if (error) {
+        toast.error(error.message);
+        setIsProcessing(false);
+        return;
+      }
+      paymentIntentObj = paymentIntent;
+    }
+
+    if (!paymentIntentObj || paymentIntentObj.status !== "succeeded") {
+      toast.error(
+        "Payment not completed. Status: " +
+          (paymentIntentObj?.status || "unknown"),
+      );
+      setIsProcessing(false);
+      return;
+    }
+
+    paymentIntentId = paymentIntentObj.id;
+
+    // --- SAVE DATA (Address) ---
     if (selectedAddressIndex === -1 && saveAddress) {
       dispatch(
         addAddress({
@@ -188,7 +174,7 @@ function CheckoutForm({
       );
     }
 
-    // --- CREATE ORDER ---
+    // --- CREATE ORDER (only after successful payment) ---
     const orderData = {
       email: user.data.email,
       items: cartItems,
