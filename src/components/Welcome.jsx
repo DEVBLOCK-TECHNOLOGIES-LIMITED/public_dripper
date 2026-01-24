@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 function Welcome() {
-    return (
-        <div className='welcome-tab'>
-            <p>Welcome to Our store</p>
-        </div>
-    )
+  return (
+    <div className="welcome-tab">
+      <p>Luxury At Your Own Terms</p>
+    </div>
+  );
 }
 
-export default Welcome
+export default Welcome;
