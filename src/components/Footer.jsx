@@ -90,12 +90,6 @@ const Footer = () => {
                 >
                   Search Collection
                 </Link>
-                <Link
-                  to="/credits"
-                  className="text-champagne-300 hover:text-gold-500 font-bold transition-all hover:translate-x-1"
-                >
-                  Credit Store
-                </Link>
               </div>
             </div>
 
@@ -110,12 +104,6 @@ const Footer = () => {
                   className="text-champagne-300 hover:text-gold-500 font-bold transition-all hover:translate-x-1"
                 >
                   Contact Us
-                </Link>
-                <Link
-                  to="/my-orders"
-                  className="text-champagne-300 hover:text-gold-500 font-bold transition-all hover:translate-x-1"
-                >
-                  Track Order
                 </Link>
                 <span className="text-champagne-300 font-bold cursor-pointer hover:text-gold-500 transition-all hover:translate-x-1">
                   Authentication

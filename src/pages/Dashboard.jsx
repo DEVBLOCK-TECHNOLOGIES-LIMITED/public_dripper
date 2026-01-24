@@ -81,10 +81,10 @@ function Dashboard() {
                 <HiOutlineShieldCheck />
               </div>
               <div>
-                <h3 className="font-bold text-champagne-100">
-                  100% Authenticated
-                </h3>
-                <p className="text-sm text-champagne-500">Expert verified</p>
+                <h3 className="font-bold text-champagne-100">100% Authentic</h3>
+                <p className="text-sm text-champagne-500">
+                  Expert verifed before listing
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-4 p-6 rounded-2xl bg-noir-800/50 border border-gold-500/10 hover:border-gold-500/30 transition group">
@@ -93,7 +93,7 @@ function Dashboard() {
               </div>
               <div>
                 <h3 className="font-bold text-champagne-100">
-                  White Glove Delivery
+                  Insured UK Delivery
                 </h3>
                 <p className="text-sm text-champagne-500">Insured shipping</p>
               </div>
@@ -103,7 +103,9 @@ function Dashboard() {
                 <HiOutlineLightningBolt />
               </div>
               <div>
-                <h3 className="font-bold text-champagne-100">VIP Concierge</h3>
+                <h3 className="font-bold text-champagne-100">
+                  Customer Support
+                </h3>
                 <p className="text-sm text-champagne-500">24/7 support</p>
               </div>
             </div>
@@ -176,11 +178,7 @@ function Dashboard() {
                 Exclusive Offer
               </div>
               <h2 className="font-display text-3xl lg:text-4xl font-bold text-noir-900 mb-3">
-                Experience True{" "}
-                <span className="underline decoration-wavy decoration-noir-900/50">
-                  Luxury
-                </span>{" "}
-                Today!
+                Experience True <span>Luxury</span> Today!
               </h2>
               <p className="text-noir-900/80 text-lg max-w-xl font-medium">
                 Shop our curated collection of rare and authenticated pieces.
