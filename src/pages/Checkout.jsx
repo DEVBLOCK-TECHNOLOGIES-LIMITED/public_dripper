@@ -67,12 +67,10 @@ function CheckoutForm({
   setSaveCard,
   cartItems,
   cartSubtotal,
-  shippingCost,
   deliveryOption,
   setDeliveryOption,
   deliveryFee,
   finalTotal,
-  isShippingLoading,
   isLoadingOrder,
   user,
   clientSecret,
@@ -557,19 +555,6 @@ function CheckoutForm({
             </div>
 
             <div className="flex justify-between text-champagne-400 text-sm">
-              <span>Shipping</span>
-              {isShippingLoading ? (
-                <span className="text-champagne-500 italic">
-                  Calculating...
-                </span>
-              ) : (
-                <span className="text-champagne-100 font-bold">
-                  {shippingCost === 0 ? "FREE" : formatPrice(shippingCost)}
-                </span>
-              )}
-            </div>
-
-            <div className="flex justify-between text-champagne-400 text-sm">
               <span>
                 Delivery (
                 {DELIVERY_OPTIONS.find((o) => o.id === deliveryOption)?.name})
@@ -621,8 +606,6 @@ function Checkout() {
   const { user } = useSelector((state) => state.auth);
   const cartItems = user?.data?.cart || [];
   const { isLoading, isSuccess } = useSelector((state) => state.orders);
-  const { shippingFee: backendShippingFee, isLoading: isShippingLoading } =
-    useSelector((state) => state.shippingFee);
 
   // -- Lifted State --
   const [formData, setFormData] = useState({
@@ -641,7 +624,6 @@ function Checkout() {
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
   const [saveAddress, setSaveAddress] = useState(false);
   const [saveCard, setSaveCard] = useState(false);
-  const [shippingCost, setShippingCost] = useState(0);
   const [clientSecret, setClientSecret] = useState("");
   const [deliveryOption, setDeliveryOption] = useState("standard"); // 'standard' or 'premium'
   // [NEW] Stripe Saved Cards State
@@ -691,39 +673,13 @@ function Checkout() {
     }
   }, [isSuccess, navigate, dispatch, user]);
 
-  useEffect(() => {
-    let currentState = formData.state;
-    if (
-      selectedAddressIndex !== -1 &&
-      user?.data?.addresses?.[selectedAddressIndex]
-    ) {
-      currentState = user.data.addresses[selectedAddressIndex].state;
-    }
-
-    if (currentState && cartItems?.length > 0) {
-      dispatch(
-        getShippingFee({
-          originState: "ogun",
-          destinationState: currentState,
-          itemsCount: cartItems.length,
-        }),
-      );
-    }
-  }, [selectedAddressIndex, formData.state, user, cartItems?.length, dispatch]);
-
-  useEffect(() => {
-    if (backendShippingFee?.data?.shippingFee !== undefined) {
-      setShippingCost(backendShippingFee.data.shippingFee);
-    }
-  }, [backendShippingFee]);
-
   const cartSubtotal =
     cartItems?.reduce((total, item) => total + parseFloat(item.price), 0) || 0;
 
   // Calculate delivery fee based on selected option
   const deliveryFee =
     DELIVERY_OPTIONS.find((o) => o.id === deliveryOption)?.price || 0;
-  const finalTotal = cartSubtotal + shippingCost + deliveryFee;
+  const finalTotal = cartSubtotal + deliveryFee;
 
   // -- Stripe Intent Fetching --
   useEffect(() => {
@@ -811,12 +767,10 @@ function Checkout() {
               setSaveCard={setSaveCard}
               cartItems={cartItems}
               cartSubtotal={cartSubtotal}
-              shippingCost={shippingCost}
               deliveryOption={deliveryOption}
               setDeliveryOption={setDeliveryOption}
               deliveryFee={deliveryFee}
               finalTotal={finalTotal}
-              isShippingLoading={isShippingLoading}
               isLoadingOrder={isLoading}
               user={user}
               clientSecret={clientSecret}
