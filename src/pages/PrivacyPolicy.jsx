@@ -1,82 +1,7 @@
 import { FaShieldAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function PrivacyPolicy() {
-  const sections = [
-    {
-      title: "Information We Collect",
-      content: [
-        "Personal identification information (name, email address, phone number, shipping address)",
-        "Payment information (processed securely through our payment partners)",
-        "Browsing behavior and preferences on our website",
-        "Communication records when you contact our concierge team",
-      ],
-    },
-    {
-      title: "How We Use Your Information",
-      content: [
-        "To process and fulfill your orders for luxury handbags",
-        "To provide personalized shopping recommendations",
-        "To communicate with you about your orders and our services",
-        "To send exclusive offers and updates (with your consent)",
-        "To improve our website and customer experience",
-        "To prevent fraudulent transactions and ensure security",
-      ],
-    },
-    {
-      title: "Information Protection",
-      content: [
-        "We implement industry-standard SSL encryption for all data transmission",
-        "Payment information is processed through PCI-compliant payment processors",
-        "Access to personal information is restricted to authorized personnel only",
-        "Regular security audits and updates are performed on our systems",
-      ],
-    },
-    {
-      title: "Cookies & Tracking",
-      content: [
-        "We use essential cookies to enable core website functionality",
-        "Analytics cookies help us understand how visitors interact with our site",
-        "Preference cookies remember your settings and personalization choices",
-        "You can manage cookie preferences through your browser settings",
-      ],
-    },
-    {
-      title: "Third-Party Sharing",
-      content: [
-        "We do not sell your personal information to third parties",
-        "Information may be shared with shipping partners to deliver your orders",
-        "Payment processors receive necessary data to complete transactions",
-        "We may share data when required by law or to protect our rights",
-      ],
-    },
-    {
-      title: "Your Rights",
-      content: [
-        "Access and review the personal information we hold about you",
-        "Request correction of inaccurate or incomplete data",
-        "Request deletion of your personal information (subject to legal requirements)",
-        "Opt-out of marketing communications at any time",
-        "Data portability - receive your data in a structured format",
-      ],
-    },
-    {
-      title: "Data Retention",
-      content: [
-        "We retain your information for as long as necessary to provide our services",
-        "Transaction records are kept for accounting and legal compliance purposes",
-        "You may request deletion of your account and associated data at any time",
-      ],
-    },
-    {
-      title: "Contact Us",
-      content: [
-        "For any privacy-related questions or requests, please contact our team",
-        "Email: privacy@publicdripper.com",
-        "We aim to respond to all inquiries within 48 hours",
-      ],
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-noir-900 py-16 px-4">
       {/* Decorative background elements */}
@@ -92,45 +17,158 @@ function PrivacyPolicy() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-gold-500 via-gold-400 to-gold-600 rounded-2xl mb-6 shadow-lg shadow-gold-500/30">
             <FaShieldAlt className="text-2xl text-noir-900" />
           </div>
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-champagne-100 mb-4">
+          <p className="text-gold-500 text-sm font-bold uppercase tracking-widest mb-3">
+            🔐 Privacy Policy
+          </p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-champagne-100 mb-6">
             Privacy Policy
           </h1>
-          <p className="text-champagne-400 max-w-2xl mx-auto text-lg">
-            Your privacy is paramount to us. This policy outlines how
-            PublicDripper collects, uses, and protects your personal
-            information.
-          </p>
-          <p className="text-champagne-500 text-sm mt-4">
-            Last updated: January 2026
+          <p className="text-champagne-400 max-w-2xl mx-auto text-lg leading-relaxed">
+            At PublicDripper, we respect your privacy and are committed to
+            protecting your personal data. This Privacy Policy explains how we
+            collect, use, and safeguard your information when you visit or make
+            a purchase from our website.
           </p>
         </div>
 
         {/* Content Sections */}
         <div className="space-y-8">
-          {sections.map((section, index) => (
-            <div
-              key={index}
-              className="bg-noir-800/50 backdrop-blur-sm border border-gold-500/20 rounded-3xl p-8 hover:border-gold-500/40 transition-all duration-300"
-            >
-              <h2 className="font-display text-xl font-bold text-gold-500 mb-5 flex items-center gap-3">
-                <span className="w-8 h-8 bg-gold-500/10 rounded-lg flex items-center justify-center text-sm text-gold-400">
-                  {index + 1}
-                </span>
-                {section.title}
-              </h2>
-              <ul className="space-y-3">
-                {section.content.map((item, itemIndex) => (
-                  <li
-                    key={itemIndex}
-                    className="text-champagne-300 flex items-start gap-3 leading-relaxed"
-                  >
-                    <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Information We Collect */}
+          <div className="bg-noir-800/50 backdrop-blur-sm border border-gold-500/20 rounded-3xl p-8 hover:border-gold-500/40 transition-all duration-300">
+            <h2 className="font-display text-xl font-bold text-gold-500 mb-5">
+              Information We Collect
+            </h2>
+            <p className="text-champagne-400 mb-4">
+              We may collect the following information:
+            </p>
+            <ul className="space-y-3">
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Personal details such as your name, email address, billing
+                address, shipping address, and phone number
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Payment information (processed securely via third-party payment
+                providers)
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Order history and transaction details
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Technical data such as IP address, browser type, and device
+                information
+              </li>
+            </ul>
+          </div>
+
+          {/* How We Use Your Information */}
+          <div className="bg-noir-800/50 backdrop-blur-sm border border-gold-500/20 rounded-3xl p-8 hover:border-gold-500/40 transition-all duration-300">
+            <h2 className="font-display text-xl font-bold text-gold-500 mb-5">
+              How We Use Your Information
+            </h2>
+            <p className="text-champagne-400 mb-4">
+              Your information is used to:
+            </p>
+            <ul className="space-y-3">
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Process and fulfil orders
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Communicate with you regarding purchases, delivery, or customer
+                support
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Improve our website, products, and services
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Comply with legal and regulatory obligations
+              </li>
+            </ul>
+          </div>
+
+          {/* Payment Processing */}
+          <div className="bg-noir-800/50 backdrop-blur-sm border border-gold-500/20 rounded-3xl p-8 hover:border-gold-500/40 transition-all duration-300">
+            <h2 className="font-display text-xl font-bold text-gold-500 mb-5">
+              Payment Processing
+            </h2>
+            <p className="text-champagne-300 leading-relaxed">
+              All payments are processed securely through third-party providers.
+              We do not store or have direct access to your full payment
+              details.
+            </p>
+          </div>
+
+          {/* Data Sharing */}
+          <div className="bg-noir-800/50 backdrop-blur-sm border border-gold-500/20 rounded-3xl p-8 hover:border-gold-500/40 transition-all duration-300">
+            <h2 className="font-display text-xl font-bold text-gold-500 mb-5">
+              Data Sharing
+            </h2>
+            <p className="text-champagne-400 mb-4">
+              We do not sell or rent your personal data. We may share limited
+              information with trusted third parties only where necessary to:
+            </p>
+            <ul className="space-y-3">
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Process payments
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Deliver orders
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Comply with legal obligations
+              </li>
+            </ul>
+          </div>
+
+          {/* Data Security */}
+          <div className="bg-noir-800/50 backdrop-blur-sm border border-gold-500/20 rounded-3xl p-8 hover:border-gold-500/40 transition-all duration-300">
+            <h2 className="font-display text-xl font-bold text-gold-500 mb-5">
+              Data Security
+            </h2>
+            <p className="text-champagne-300 leading-relaxed">
+              We take reasonable measures to protect your personal information
+              from unauthorised access, loss, or misuse. However, no method of
+              transmission over the internet is completely secure.
+            </p>
+          </div>
+
+          {/* Your Rights */}
+          <div className="bg-noir-800/50 backdrop-blur-sm border border-gold-500/20 rounded-3xl p-8 hover:border-gold-500/40 transition-all duration-300">
+            <h2 className="font-display text-xl font-bold text-gold-500 mb-5">
+              Your Rights
+            </h2>
+            <p className="text-champagne-400 mb-4">You have the right to:</p>
+            <ul className="space-y-3">
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Access, correct, or request deletion of your personal data
+              </li>
+              <li className="text-champagne-300 flex items-start gap-3 leading-relaxed">
+                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-2.5 flex-shrink-0"></span>
+                Withdraw consent for marketing communications at any time
+              </li>
+            </ul>
+            <p className="text-champagne-400 mt-6">
+              To exercise your rights, please contact us via our{" "}
+              <Link
+                to="/contact"
+                className="text-gold-500 hover:text-gold-400 underline underline-offset-2 transition-colors"
+              >
+                Contact page
+              </Link>
+              .
+            </p>
+          </div>
         </div>
 
         {/* Footer Note */}
@@ -138,8 +176,7 @@ function PrivacyPolicy() {
           <div className="inline-flex items-center gap-2 bg-noir-800/50 backdrop-blur-sm border border-gold-500/20 rounded-full px-6 py-3">
             <FaShieldAlt className="text-gold-500 text-sm" />
             <span className="text-champagne-400 text-sm">
-              We are committed to protecting your privacy and ensuring data
-              security
+              Your privacy matters to us
             </span>
           </div>
         </div>
