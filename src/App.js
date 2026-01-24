@@ -20,6 +20,8 @@ import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import MyOrders from "./pages/MyOrders";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import ShippingReturns from "./pages/ShippingReturns";
 
 import AdminRoute from "./superuser/AdminRoute";
 import DashboardAdmin from "./superuser/admin/Admin";
@@ -57,6 +59,8 @@ function App() {
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/my-orders" element={<MyOrders />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/shipping-returns" element={<ShippingReturns />} />
 
         <Route path="/cart" element={<CartMock />} />
 

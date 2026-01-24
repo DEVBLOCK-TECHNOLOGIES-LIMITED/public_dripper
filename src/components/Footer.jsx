@@ -155,12 +155,18 @@ const Footer = () => {
               >
                 Privacy Policy
               </Link>
-              <span className="cursor-pointer hover:text-gold-500 transition-colors">
+              <Link
+                to="/terms-of-service"
+                className="cursor-pointer hover:text-gold-500 transition-colors"
+              >
                 Terms of Service
-              </span>
-              <span className="cursor-pointer hover:text-gold-500 transition-colors">
-                Authentication
-              </span>
+              </Link>
+              <Link
+                to="/shipping-returns"
+                className="cursor-pointer hover:text-gold-500 transition-colors"
+              >
+                Shipping & Returns
+              </Link>
             </div>
           </div>
         </div>
