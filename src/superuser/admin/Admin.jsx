@@ -29,7 +29,11 @@ const Dashboard = () => {
       }
     };
 
-    if (user?.data?.email) fetchStats();
+    if (user?.data?.email) {
+      fetchStats(); // Initial fetch
+      const interval = setInterval(fetchStats, 5000); // Poll every 5 seconds
+      return () => clearInterval(interval); // Cleanup on unmount
+    }
   }, [user]);
 
   const statCards = [
