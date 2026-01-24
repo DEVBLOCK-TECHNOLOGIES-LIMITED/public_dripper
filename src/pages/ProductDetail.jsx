@@ -173,7 +173,7 @@ function ProductDetail() {
                 className="w-full bg-gradient-to-r from-gold-500 to-gold-600 text-noir-900 py-5 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:from-gold-400 hover:to-gold-500 transition-all shadow-lg shadow-gold-500/20 transform hover:-translate-y-1 active:scale-[0.98]"
               >
                 <HiOutlineShoppingBag className="text-2xl" />
-                Add to Collection
+                Secure Yours
               </button>
             </div>
 
