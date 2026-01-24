@@ -201,6 +201,8 @@ function CheckoutForm({
       total: finalTotal,
       shippingAddress,
       paymentMethod: getPaymentMethod(),
+      deliveryOption,
+      deliveryFee,
       paymentIntentId,
     };
 
