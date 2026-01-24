@@ -34,8 +34,10 @@ function Dashboard() {
                 <span className="text-gold-gradient">Luxury Bags.</span>
               </h1>
               <p className="text-xl text-champagne-400 mb-10 max-w-lg leading-relaxed">
-                Discover authenticated pre-owned treasures from Hermès, Chanel,
-                Louis Vuitton, and more. Every piece, a masterpiece.
+                Discover authenticated pre-owned designer handbags from the
+                world’s most iconic luxury houses. Curated in limited
+                quantities, each piece selected for quality, craftsmanship, and
+                enduring style.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
