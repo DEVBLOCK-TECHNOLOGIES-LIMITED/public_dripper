@@ -13,12 +13,23 @@ const OrderManagement = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [activeTab, setActiveTab] = useState("all");
+
+  // State for shipping modal
+  const [shippingModalOpen, setShippingModalOpen] = useState(false);
+  const [shippingData, setShippingData] = useState({
+    orderId: null,
+    trackingNumber: "",
+    carrier: "",
+  });
 
   const fetchOrders = useCallback(async () => {
     setLoading(true);
     try {
+      const params = activeTab === "all" ? {} : { status: activeTab };
       const response = await axios.get(`${uri}/api/admin/orders`, {
         headers: { "x-user-email": user?.data?.email },
+        params,
       });
       setOrders(response.data.data);
     } catch (error) {
@@ -26,26 +37,54 @@ const OrderManagement = () => {
     } finally {
       setLoading(false);
     }
-  }, [user, toast]);
+  }, [user, toast, activeTab]);
 
   useEffect(() => {
     if (user?.data?.email) fetchOrders();
   }, [user, fetchOrders]);
 
-  const updateStatus = async (id, status) => {
+  const handleStatusChange = (orderId, newStatus) => {
+    if (newStatus === "shipped") {
+      setShippingData({ orderId, trackingNumber: "", carrier: "" });
+      setShippingModalOpen(true);
+    } else {
+      updateStatus(orderId, newStatus);
+    }
+  };
+
+  const updateStatus = async (
+    id,
+    status,
+    trackingNumber = null,
+    carrier = null,
+  ) => {
     try {
       await axios.put(
         `${uri}/api/admin/orders/${id}/status`,
-        { status },
+        { status, trackingNumber, carrier },
         {
           headers: { "x-user-email": user?.data?.email },
         },
       );
       toast.success(`Order marked as ${status}`);
+      setShippingModalOpen(false);
       fetchOrders();
     } catch (error) {
       toast.error("Status update failed");
     }
+  };
+
+  const handleShippingSubmit = () => {
+    if (!shippingData.trackingNumber || !shippingData.carrier) {
+      toast.error("Please enter tracking number and carrier");
+      return;
+    }
+    updateStatus(
+      shippingData.orderId,
+      "shipped",
+      shippingData.trackingNumber,
+      shippingData.carrier,
+    );
   };
 
   const getStatusStyle = (status) => {
@@ -63,6 +102,13 @@ const OrderManagement = () => {
     if (option === "premium") return "Premium (1-3 days)";
     return "Standard (5 days)";
   };
+
+  const tabs = [
+    { id: "all", label: "All Orders" },
+    { id: "pending", label: "Pending" },
+    { id: "shipped", label: "Shipped" },
+    { id: "delivered", label: "Delivered" },
+  ];
 
   return (
     <AdminLayout>
@@ -86,6 +132,23 @@ const OrderManagement = () => {
             />
           </button>
         </header>
+
+        {/* Tabs */}
+        <div className="flex space-x-2 border-b border-gold-500/10 pb-1 overflow-x-auto">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-4 py-2 text-sm font-bold rounded-t-lg transition-colors whitespace-nowrap ${
+                activeTab === tab.id
+                  ? "bg-gold-500/10 text-gold-500 border-b-2 border-gold-500"
+                  : "text-champagne-400 hover:text-champagne-200 hover:bg-gold-500/5"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
         <div className="bg-noir-800 rounded-3xl shadow-sm border border-gold-500/10 overflow-hidden">
           <div className="overflow-x-auto">
@@ -128,8 +191,8 @@ const OrderManagement = () => {
                       key={order._id}
                       className="hover:bg-gold-500/5 transition-colors group"
                     >
-                      <td className="px-6 py-5 font-mono text-xs text-champagne-500 font-bold">
-                        {order._id.slice(-8).toUpperCase()}
+                      <td className="px-6 py-5 font-mono text-xs text-champagne-500 font-bold select-all">
+                        {order._id}
                       </td>
                       <td className="px-6 py-5">
                         <div className="flex flex-col">
@@ -161,13 +224,14 @@ const OrderManagement = () => {
                       <td className="px-6 py-5">
                         <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                           <select
-                            value={order.status || "Processing"}
+                            value={order.status || "pending"} // Default to pending if undefined
                             onChange={(e) =>
-                              updateStatus(order._id, e.target.value)
+                              handleStatusChange(order._id, e.target.value)
                             }
                             className="bg-noir-900 border border-gold-500/20 text-xs font-bold rounded-lg px-3 py-2 outline-none text-champagne-200 focus:ring-1 focus:ring-gold-500 cursor-pointer"
                           >
-                            <option value="pending">Process</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
                             <option value="shipped">Ship</option>
                             <option value="delivered">Deliver</option>
                           </select>
@@ -188,6 +252,67 @@ const OrderManagement = () => {
         </div>
       </div>
 
+      {/* Shipping Modal */}
+      {shippingModalOpen && (
+        <div className="fixed inset-0 bg-noir-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-noir-800 rounded-3xl border border-gold-500/20 max-w-md w-full p-6">
+            <h2 className="text-xl font-display font-bold text-champagne-100 mb-4">
+              Enter Tracking Details
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs text-champagne-500 font-bold uppercase block mb-1">
+                  Carrier
+                </label>
+                <input
+                  type="text"
+                  value={shippingData.carrier}
+                  onChange={(e) =>
+                    setShippingData({
+                      ...shippingData,
+                      carrier: e.target.value,
+                    })
+                  }
+                  className="w-full bg-noir-900 border border-gold-500/20 rounded-lg px-3 py-2 text-champagne-200 focus:outline-none focus:border-gold-500"
+                  placeholder="e.g. DHL, FedEx"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-champagne-500 font-bold uppercase block mb-1">
+                  Tracking Number
+                </label>
+                <input
+                  type="text"
+                  value={shippingData.trackingNumber}
+                  onChange={(e) =>
+                    setShippingData({
+                      ...shippingData,
+                      trackingNumber: e.target.value,
+                    })
+                  }
+                  className="w-full bg-noir-900 border border-gold-500/20 rounded-lg px-3 py-2 text-champagne-200 focus:outline-none focus:border-gold-500"
+                  placeholder="e.g. 123456789"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={() => setShippingModalOpen(false)}
+                className="px-4 py-2 text-sm font-bold text-champagne-400 hover:text-champagne-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleShippingSubmit}
+                className="px-4 py-2 text-sm font-bold bg-gold-500 text-white rounded-lg hover:bg-gold-600"
+              >
+                Confirm Shipment
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Order Detail Modal */}
       {selectedOrder && (
         <div className="fixed inset-0 bg-noir-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -207,7 +332,7 @@ const OrderManagement = () => {
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-champagne-500 mb-1">Order ID</p>
-                  <p className="text-champagne-100 font-mono font-bold">
+                  <p className="text-champagne-100 font-mono font-bold select-all">
                     {selectedOrder._id}
                   </p>
                 </div>
@@ -234,6 +359,19 @@ const OrderManagement = () => {
                     {formatPrice(selectedOrder.total)}
                   </p>
                 </div>
+                {selectedOrder.trackingNumber && (
+                  <div className="col-span-2 bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                    <p className="text-blue-400 font-bold text-xs uppercase mb-1">
+                      Tracking Info
+                    </p>
+                    <p className="text-champagne-200">
+                      <span className="font-bold">
+                        {selectedOrder.carrier}:
+                      </span>{" "}
+                      {selectedOrder.trackingNumber}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {selectedOrder.shippingAddress && (
