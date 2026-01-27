@@ -3,11 +3,6 @@ import uri from "../config";
 
 const regUser = async (data) => {
   const response = await axios.post(`${uri}/api/user`, data);
-
-  if (response.data) {
-    localStorage.setItem("public-dripper-user", JSON.stringify(response.data));
-  }
-
   return response.data;
 };
 
@@ -23,6 +18,11 @@ const loginUser = async (data) => {
 
 const logout = () => {
   localStorage.removeItem("public-dripper-user");
+};
+
+const confirmEmail = async (token) => {
+  const response = await axios.get(`${uri}/api/user/confirm/${token}`);
+  return response.data;
 };
 
 const updateProfile = async (email, profileData) => {
@@ -98,6 +98,7 @@ const authService = {
   regUser,
   loginUser,
   logout,
+  confirmEmail,
   updateProfile,
   addAddress,
   removeAddress,

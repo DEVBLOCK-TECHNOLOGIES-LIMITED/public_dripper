@@ -3,6 +3,8 @@ import { ToastProvider } from "./context/ToastContext";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ConfirmEmail from "./pages/ConfirmEmail";
+import VerifyEmail from "./pages/VerifyEmail";
 import Header from "./components/Header";
 import FloatButton from "./components/FloatButton";
 import Contact from "./pages/Contact";
@@ -51,6 +53,8 @@ function App() {
         <Route index element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/confirm/:token" element={<ConfirmEmail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/search" element={<Search />} />
         <Route path="/catalog" element={<Catalog />} />

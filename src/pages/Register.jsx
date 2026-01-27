@@ -16,11 +16,14 @@ function Register() {
     password: "",
     password2: "",
   });
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const { name, email, password, password2 } = formData;
-  const { user, isError, message, isLoading } = useSelector((state) => {
-    return state.auth;
-  });
+  const { user, isError, message, isLoading, isSuccess } = useSelector(
+    (state) => {
+      return state.auth;
+    },
+  );
 
   const dispatch = useDispatch();
   const { toast } = useToast();
@@ -40,12 +43,30 @@ function Register() {
       toast.error(message);
     }
 
-    if (user) {
+    if (isSuccess && !isError) {
+      setIsRegistered(true);
+      toast.success("Account created! Please check your email to confirm.");
+      navigate("/verify-email", { state: { email } });
+    }
+
+    // Don't navigate if we just registered via email
+    if (user && !isRegistered) {
       navigate("/");
     }
 
-    dispatch(reset());
-  }, [message, isError, dispatch, user, navigate, toast]);
+    return () => {
+      dispatch(reset());
+    };
+  }, [
+    message,
+    isError,
+    isSuccess,
+    dispatch,
+    user,
+    navigate,
+    toast,
+    isRegistered,
+  ]);
 
   const onSubmit = (e) => {
     e.preventDefault();

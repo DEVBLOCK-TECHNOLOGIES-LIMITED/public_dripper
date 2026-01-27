@@ -192,7 +192,8 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.user = action.payload;
+        // Do not set state.user here, as we require email verification
+        state.user = null;
       })
       .addCase(login.pending, (state) => {
         state.isLoading = true;

@@ -89,16 +89,19 @@ function Header() {
       >
         <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group relative z-50">
-            <div className="w-11 h-11 bg-gradient-to-tr from-gold-500 via-gold-400 to-gold-600 rounded-xl flex items-center justify-center text-noir-900 shadow-lg shadow-gold-500/30 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-              <FaGem className="text-lg" />
+          <Link
+            to="/"
+            className="flex items-center gap-2 md:gap-3 group relative z-50"
+          >
+            <div className="w-9 h-9 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-tr from-gold-500 via-gold-400 to-gold-600 rounded-xl flex items-center justify-center text-noir-900 shadow-lg shadow-gold-500/30 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+              <FaGem className="text-sm md:text-base lg:text-xl" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-bold text-2xl text-champagne-100 tracking-tight leading-none">
+              <span className="font-display font-bold text-lg md:text-xl lg:text-2xl text-champagne-100 tracking-tight leading-none">
                 Public
                 <span className="text-gold-500">Dripper</span>
               </span>
-              <span className="text-[9px] font-bold text-gold-500/70 uppercase tracking-[0.25em]">
+              <span className="text-[7px] md:text-[8px] lg:text-[9px] font-bold text-gold-500/70 uppercase tracking-[0.25em]">
                 Luxury Redefined
               </span>
             </div>

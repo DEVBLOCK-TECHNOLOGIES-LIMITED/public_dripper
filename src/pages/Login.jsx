@@ -35,7 +35,11 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      if (message.includes("Please confirm your email")) {
+        navigate("/verify-email", { state: { email } });
+      } else {
+        toast.error(message);
+      }
     }
 
     if (user) {
