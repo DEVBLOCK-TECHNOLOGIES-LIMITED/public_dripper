@@ -103,6 +103,7 @@ function CheckoutForm({
         city: saved.city,
         state: saved.state,
         zipCode: saved.zipCode || "",
+        phoneNumber: saved.phoneNumber || "",
       };
     }
     return {
@@ -110,6 +111,7 @@ function CheckoutForm({
       city: formData.city,
       state: formData.state,
       zipCode: formData.zipCode,
+      phoneNumber: formData.phoneNumber,
     };
   };
 

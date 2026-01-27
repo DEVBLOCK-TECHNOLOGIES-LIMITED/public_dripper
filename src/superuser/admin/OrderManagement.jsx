@@ -105,7 +105,7 @@ const OrderManagement = () => {
 
   const tabs = [
     { id: "all", label: "All Orders" },
-    { id: "pending", label: "Pending" },
+    { id: "processing", label: "Processing" },
     { id: "shipped", label: "Shipped" },
     { id: "delivered", label: "Delivered" },
   ];
@@ -224,7 +224,7 @@ const OrderManagement = () => {
                       <td className="px-6 py-5">
                         <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                           <select
-                            value={order.status || "pending"} // Default to pending if undefined
+                            value={order.status || "processing"} // Default to processing
                             onChange={(e) =>
                               handleStatusChange(order._id, e.target.value)
                             }

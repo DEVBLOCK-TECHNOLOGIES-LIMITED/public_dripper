@@ -5,7 +5,6 @@ import uri from "../../features/config";
 import AdminLayout from "../AdminLayout";
 import { HiOutlineShieldCheck } from "react-icons/hi";
 import { useToast } from "../../context/ToastContext";
-import { formatPrice } from "../../utils/formatPrice";
 
 const UserManagement = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -64,7 +63,6 @@ const UserManagement = () => {
               <thead>
                 <tr className="bg-gold-500/10 text-gold-500 text-xs font-black tracking-[0.2em] uppercase border-b border-gold-500/10">
                   <th className="px-6 py-5">User Account</th>
-                  <th className="px-6 py-5">Credits</th>
                   <th className="px-6 py-5">Status</th>
                   <th className="px-6 py-5">Access Level</th>
                   <th className="px-6 py-5 text-right">Control</th>
@@ -89,16 +87,6 @@ const UserManagement = () => {
                             {u.email}
                           </p>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <div className="flex flex-col">
-                        <span className="font-black text-gold-500">
-                          {formatPrice(u.balance || 0)}
-                        </span>
-                        <span className="text-[10px] text-champagne-600 font-black uppercase tracking-widest">
-                          Available
-                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-5">
