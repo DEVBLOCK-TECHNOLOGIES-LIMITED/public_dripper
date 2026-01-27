@@ -159,7 +159,9 @@ function OrderItem({ order, user }) {
         <div className="flex flex-col md:flex-row gap-8 items-start md:items-center flex-1">
           <div className="flex gap-4 items-center">
             <div className="w-12 h-12 bg-noir-900 rounded-xl flex items-center justify-center text-gold-500 font-bold text-lg border border-gold-500/20 group-hover:border-gold-500/50 transition-colors">
-              #{order._id.slice(-4)}
+              <span className="text-[10px] break-all p-1 leading-tight">
+                {order._id}
+              </span>
             </div>
             <div>
               <p className="text-xs font-bold text-gold-500/60 uppercase mb-1 tracking-wider">
@@ -197,9 +199,11 @@ function OrderItem({ order, user }) {
               className={`px-3 py-1 text-xs font-bold rounded-full uppercase border ${
                 order.status === "completed"
                   ? "bg-green-900/20 text-green-400 border-green-500/30"
-                  : order.status === "pending"
-                    ? "bg-yellow-900/20 text-yellow-400 border-yellow-500/30"
-                    : "bg-noir-900 text-champagne-500 border-gold-500/10"
+                  : order.status === "processing"
+                    ? "bg-amber-900/20 text-amber-400 border-amber-500/30"
+                    : order.status === "pending"
+                      ? "bg-yellow-900/20 text-yellow-400 border-yellow-500/30"
+                      : "bg-noir-900 text-champagne-500 border-gold-500/10"
               }`}
             >
               {order.status}

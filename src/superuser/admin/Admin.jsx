@@ -50,8 +50,8 @@ const Dashboard = () => {
       color: "bg-gold-500",
     },
     {
-      title: "Total Pending",
-      value: stats?.totalPending || 0,
+      title: "Total Processing",
+      value: stats?.totalprocessing || 0,
       icon: <HiOutlineCube size={24} />,
       color: "bg-gold-500",
     },
