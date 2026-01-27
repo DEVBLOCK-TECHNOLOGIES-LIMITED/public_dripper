@@ -12,33 +12,35 @@ function ConfirmEmail() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const verifyEmail = async () => {
-      try {
-        const response = await authService.confirmEmail(token);
-        setStatus("success");
-        setMessage(response.message || "Email confirmed successfully!");
-        toast.success(response.message || "Email confirmed successfully!");
-      } catch (error) {
-        setStatus("error");
-        const errorMsg =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          "Confirmation failed";
-        setMessage(errorMsg);
-        toast.error(errorMsg);
-      }
-    };
+  const verifyEmail = async () => {
+    setStatus("verifying");
+    try {
+      const response = await authService.confirmEmail(token);
+      setStatus("success");
+      setMessage(response.message || "Email confirmed successfully!");
+      toast.success(response.message || "Email confirmed successfully!");
+    } catch (error) {
+      setStatus("error");
+      const errorMsg =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        "Confirmation failed";
+      setMessage(errorMsg);
+      toast.error(errorMsg);
+    }
+  };
 
-    if (token) {
-      verifyEmail();
-    } else {
+  useEffect(() => {
+    if (!token) {
       setStatus("error");
       setMessage("Invalid confirmation link.");
+    } else {
+      // Default state is "ready" now, waiting for user click
+      setStatus("ready");
     }
-  }, [token, toast]);
+  }, [token]);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-noir-900 py-12 px-4 relative overflow-hidden">
@@ -50,6 +52,23 @@ function ConfirmEmail() {
         <div className="w-20 h-20 bg-noir-800 rounded-2xl border border-gold-500/30 flex items-center justify-center mb-4 shadow-lg shadow-gold-500/10">
           <FaGem className="text-4xl text-gold-500" />
         </div>
+
+        {status === "ready" && (
+          <>
+            <h2 className="font-display text-3xl font-bold text-champagne-100">
+              Confirm Your Email
+            </h2>
+            <p className="text-champagne-400">
+              Click the button below to activate your account.
+            </p>
+            <button
+              onClick={verifyEmail}
+              className="w-full py-4 mt-4 btn-luxury rounded-xl font-bold"
+            >
+              Verify My Email
+            </button>
+          </>
+        )}
 
         {status === "verifying" && (
           <>
