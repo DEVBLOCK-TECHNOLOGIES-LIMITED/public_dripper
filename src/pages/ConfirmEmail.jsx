@@ -13,6 +13,7 @@ function ConfirmEmail() {
   const navigate = useNavigate();
 
   const verifyEmail = async () => {
+    if (status === "verifying" || status === "success") return;
     setStatus("verifying");
     try {
       const response = await authService.confirmEmail(token);
